@@ -1,6 +1,5 @@
 <template>
   <div id="main" class="columns">
-    <router-link to="/">home</router-link>
     <events-list />
     <google-map />
   </div>

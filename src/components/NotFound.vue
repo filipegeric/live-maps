@@ -1,10 +1,6 @@
 <template>
   <div>
     <img id="loading-gif" src="../../static/img/bg_404.png" alt="404">
-    <div style="padding-top: 150px;">
-      <router-link to="/" >home</router-link>
-    </div>
-    
   </div>
 </template>
 

@@ -9,8 +9,8 @@
       <router-view/>
     </transition>
 
-    <modal-sign-in />
-    <modal-register />
+    <modal-sign-in v-if="!$store.state.signedIn" />
+    <modal-register v-if="!$store.state.signedIn" />
   </div>
 </template>
 

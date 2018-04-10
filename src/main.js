@@ -12,9 +12,17 @@ Vue.use(Vuex)
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://192.168.0.14:8000'
 
+Vue.filter('addS', value => {
+  return value + 's'
+})
+
 const store = new Vuex.Store({
   state: {
-    interests: []
+    interests: [],
+    checkedInterests: [],
+    eventsInFocus: [],
+    user: {},
+    signedIn: false
   },
   mutations: {
     refreshInterests(state) {
@@ -26,6 +34,12 @@ const store = new Vuex.Store({
     },
     clearInterests(state) {
       state.interests = []
+    },
+    refreshCheckedInterests (state, payload) {
+      state.checkedInterests = payload
+    },
+    refreshEventsInFocus (state, payload) {
+      state.eventsInFocus = payload
     }
   }
 })

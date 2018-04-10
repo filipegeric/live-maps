@@ -24,7 +24,6 @@
       <div v-if="!loading" style="margin-bottom: 2em;">
         <div class="columns has-text-centered" style="margin-bottom: 0;">
           <h2 class="column is-4 is-offset-4">Select your interests</h2>
-          <router-link to="explore">explore</router-link>
         </div>
 
         <interests-checkbox />

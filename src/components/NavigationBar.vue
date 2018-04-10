@@ -2,6 +2,10 @@
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
     <div class="navbar-brand">
+      <div id="i-mobile" class="navbar-item">
+        <router-link to="/"><i class="fas fa-angle-left"></i></router-link>
+      </div>
+      
       <div id="logo-mobile"></div>
       <div class="navbar-burger">
         <span></span>
@@ -10,35 +14,57 @@
       </div>
     </div>
 
-    <div class="navbar-menu">
+    <div class="navbar-menu ">
       <div class="navbar-start">
-        <div class="navbar-item">
+        <div v-if="$store.state.signedIn" class="navbar-item">
           <p class="control">
             <a class="button is-primary">
               <span>Create new event</span>
             </a>
           </p>
         </div>
+        <div v-else class="navbar-item " style="padding-right: 0px;">
+          <p class="control">
+            <router-link to="/"><i class="fas fa-angle-left"></i></router-link>
+          </p>
+        </div>
       </div>
       <div id="logo"></div>
       <div class="navbar-end">
-        <div id="user-name" class="navbar-item">
+        
+        <div v-if="$store.state.signedIn" id="user-name" class="navbar-item">
           <p>Filip Egeric |</p>
         </div>
-        <div class="navbar-item">
+        <div v-if="$store.state.signedIn" class="navbar-item">
           <div class="field is-grouped">
             <p class="control">
               <a class="button is-primary">
-                <span>Register</span>
+                <span>Profile</span>
               </a>
             </p>
             <p class="control">
               <a class="button is-primary">
+                <span>Logout</span>
+              </a>
+            </p>
+          </div>
+        </div>
+        
+        <div v-if="!$store.state.signedIn" class="navbar-item" style="padding-left: 50px">
+          <div class="field is-grouped">
+            <p class="control">
+              <a @click.prevent="openRegisterModal" class="button is-primary">
+                <span>Register</span>
+              </a>
+            </p>
+            <p class="control">
+              <a @click.prevent="openSignInModal" class="button is-primary">
                 <span>Login</span>
               </a>
             </p>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -47,11 +73,22 @@
 
 <script>
 export default {
-  
+  methods: {
+    openSignInModal () {
+      document.getElementById('modal-sign-in').classList.add('is-active')
+      document.querySelector('#modal-sign-in input').focus()
+    },
+    openRegisterModal () {
+      document.getElementById('modal-register').classList.add('is-active')
+      document.querySelector('#modal-register input').focus()
+    }
+  }
 }
 </script>
 
 <style scoped>
+@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
+
 nav {
   background-color: #fff;
   height: 80px;
@@ -97,9 +134,29 @@ nav {
   height: 80px;
 }
 
+i {
+  font-size: 36px;
+  color: #31aaee;
+  transition: all .25s;
+}
+
+i:hover {
+  color: #0b9cf0;
+  transform: scale(1.2);
+}
+
+#i-mobile {
+  display: none;
+}
+
 @media (max-width: 1023px) {
   #logo-mobile {
     display: inline-block;
+    margin-left: 5px;
+  }
+
+  #i-mobile {
+    display: flex;
   }
 }
 </style>

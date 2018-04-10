@@ -1,12 +1,12 @@
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent="submitForm">
     <div class="columns">
       <div class="column is-6 is-offset-3">
         <ul>
           <li v-for="(interest, key) in interests" :key="key">
-            <span>Show {{ interest.name }}</span>
+            <span>Show {{ interest.name | addS }}</span>
             <div class="is-pulled-right">
-              <input type="checkbox" :id="interest.name" name="interest" :value="interest.id" class="switch-input">
+              <input type="checkbox" :id="interest.name" name="interest" v-model="checkedInterests" :value="interest.id" class="switch-input">
               <label :for="interest.name" class="switch-label" :class="`label-${interest.name}`"></label>
             </div>
           </li>
@@ -26,9 +26,29 @@
 import axios from 'axios'
 
 export default {
+  data () {
+    return {
+      checkedInterests: []
+    }
+  },
   computed: {
     interests() {
       return this.$store.state.interests
+    }
+  },
+  methods: {
+    submitForm () {
+      var interests = this.checkedInterests.join(',')
+      axios.get(`/events/?interests=${interests}`).then(response => {
+        //console.log(response.data)
+        this.$store.commit('refreshCheckedInterests', interests.split(','))
+        this.$store.commit('refreshEventsInFocus', response.data)
+        this.$router.push({ path: '/explore' })
+        
+      }).catch(err => {
+        console.log(err)
+      })
+
     }
   }
 }
