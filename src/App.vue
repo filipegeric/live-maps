@@ -16,8 +16,8 @@
 
 <script>
 import NavigationBar from './components/NavigationBar'
-import ModalSignIn from './components/ModalSignIn'
-import ModalRegister from './components/ModalRegister'
+import ModalSignIn from './components/modals/ModalSignIn'
+import ModalRegister from './components/modals/ModalRegister'
 
 export default {
   components: {

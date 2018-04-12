@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import InterestsCheckbox from './InterestsCheckbox'
+import InterestsCheckbox from './welcome-view/InterestsCheckbox'
 
 export default {
   components: {

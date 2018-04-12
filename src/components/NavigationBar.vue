@@ -25,7 +25,7 @@
         </div>
         <div v-else class="navbar-item " style="padding-right: 0px;">
           <p class="control">
-            <router-link to="/"><i class="fas fa-angle-left"></i></router-link>
+            <router-link to="/"><i  @click="handleBack" class="fas fa-angle-left"></i></router-link>
           </p>
         </div>
       </div>
@@ -81,6 +81,11 @@ export default {
     openRegisterModal () {
       document.getElementById('modal-register').classList.add('is-active')
       document.querySelector('#modal-register input').focus()
+    },
+    handleBack () {
+      this.$store.commit('changeLoadingExploreView')
+      this.$store.commit('clearEventsInFocus')
+      this.$store.commit('clearCheckedInterests')
     }
   }
 }

@@ -18,6 +18,7 @@ Vue.filter('addS', value => {
 
 const store = new Vuex.Store({
   state: {
+    loadingExploreView: true,
     interests: [],
     checkedInterests: [],
     eventsInFocus: [],
@@ -38,8 +39,17 @@ const store = new Vuex.Store({
     refreshCheckedInterests (state, payload) {
       state.checkedInterests = payload
     },
+    clearCheckedInterests (state) {
+      state.checkedInterests = []
+    },
     refreshEventsInFocus (state, payload) {
       state.eventsInFocus = payload
+    },
+    clearEventsInFocus (state) {
+      state.eventsInFocus = []
+    },
+    changeLoadingExploreView (state) {
+      state.loadingExploreView = !state.loadingExploreView
     }
   }
 })

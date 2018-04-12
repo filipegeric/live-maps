@@ -43,12 +43,11 @@ export default {
         //console.log(response.data)
         this.$store.commit('refreshCheckedInterests', interests.split(','))
         this.$store.commit('refreshEventsInFocus', response.data)
-        this.$router.push({ path: '/explore' })
-        
+        this.$store.commit('changeLoadingExploreView')
       }).catch(err => {
         console.log(err)
       })
-
+      this.$router.push({ path: '/explore' })
     }
   }
 }
