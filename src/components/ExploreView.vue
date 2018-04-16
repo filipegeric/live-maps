@@ -29,7 +29,8 @@ export default {
 
 <style scoped>
 #main {
-  padding-top: 85px;
+  padding-top: 80px;
+  height: 100vh;
 }
 
 #loading-gif {

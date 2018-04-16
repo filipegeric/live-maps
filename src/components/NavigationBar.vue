@@ -3,20 +3,20 @@
 
     <div class="navbar-brand">
       <div id="i-mobile" class="navbar-item">
-        <router-link to="/"><i class="fas fa-angle-left"></i></router-link>
+        <router-link to="/"><i @click="handleBack" class="fas fa-angle-left"></i></router-link>
       </div>
       
       <div id="logo-mobile"></div>
-      <div class="navbar-burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <a @click.prevent="handleBurgerToggle" id="burger" role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
 
-    <div class="navbar-menu ">
+    <div id="navMenu" class="navbar-menu ">
       <div class="navbar-start">
-        <div v-if="$store.state.signedIn" class="navbar-item">
+        <div id="create-new-button" v-if="$store.state.signedIn" class="navbar-item">
           <p class="control">
             <a class="button is-primary">
               <span>Create new event</span>
@@ -25,7 +25,7 @@
         </div>
         <div v-else class="navbar-item " style="padding-right: 0px;">
           <p class="control">
-            <router-link to="/"><i  @click="handleBack" class="fas fa-angle-left"></i></router-link>
+            <router-link to="/"><i id="i-widescreen" @click="handleBack" class="fas fa-angle-left"></i></router-link>
           </p>
         </div>
       </div>
@@ -33,9 +33,9 @@
       <div class="navbar-end">
         
         <div v-if="$store.state.signedIn" id="user-name" class="navbar-item">
-          <p>Filip Egeric |</p>
+          <span>Filip Egeric |</span>
         </div>
-        <div v-if="$store.state.signedIn" class="navbar-item">
+        <div v-if="$store.state.signedIn" class="navbar-item" style="float: right;">
           <div class="field is-grouped">
             <p class="control">
               <a class="button is-primary">
@@ -50,7 +50,7 @@
           </div>
         </div>
         
-        <div v-if="!$store.state.signedIn" class="navbar-item" style="padding-left: 50px">
+        <div v-if="!$store.state.signedIn" class="navbar-item" style="padding-left: 50px; float: right;">
           <div class="field is-grouped">
             <p class="control">
               <a @click.prevent="openRegisterModal" class="button is-primary">
@@ -86,6 +86,14 @@ export default {
       this.$store.commit('changeLoadingExploreView')
       this.$store.commit('clearEventsInFocus')
       this.$store.commit('clearCheckedInterests')
+    },
+    handleBurgerToggle () {
+      var id = document.getElementById('burger').dataset.target
+      var target = document.getElementById(id)
+
+      document.getElementById('burger').classList.toggle('is-active')
+      target.classList.toggle('is-active')
+      
     }
   }
 }
@@ -163,5 +171,22 @@ i:hover {
   #i-mobile {
     display: flex;
   }
+
+  #logo {
+    display: none;
+  }
+
+  #i-widescreen {
+    display: none;
+  }
+
+  #user-name {
+    display: none;
+  }
+
+  #create-new-button {
+    float: right;
+  }
+
 }
 </style>

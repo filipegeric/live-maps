@@ -39,8 +39,8 @@ export default {
   methods: {
     submitForm () {
       var interests = this.checkedInterests.join(',')
+      console.log(`/events/?interests=${interests}`)
       axios.get(`/events/?interests=${interests}`).then(response => {
-        //console.log(response.data)
         this.$store.commit('refreshCheckedInterests', interests.split(','))
         this.$store.commit('refreshEventsInFocus', response.data)
         this.$store.commit('changeLoadingExploreView')
