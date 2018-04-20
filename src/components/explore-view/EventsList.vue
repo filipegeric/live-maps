@@ -1,17 +1,19 @@
 <template>
   <div id="events-column" class="column is-5">
 
-  <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <img v-if="loading" id="loading-gif" src="../../assets/img/loading-gif.gif" alt="Loading...">
-  </transition>
+    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+      <img v-if="loading" id="loading-gif" src="../../assets/img/loading-gif.gif" alt="Loading...">
+    </transition>
 
-  <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-    <div v-if="!loading" id="event-list-container">
-      <div id="event-list">
-        <event-preview v-for="(event,key) in events" :key="key" :event="event" />
+    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+      <div v-if="!loading" id="event-list-container">
+        <div id="event-list">
+          <transition-group name="list-complete">
+            <event-preview v-for="item in events" :key="item.id" class="list-complete-item" :event="item" /> 
+          </transition-group>
+        </div>
       </div>
-    </div>
-  </transition>
+    </transition>
 
   </div>
 </template>
@@ -23,11 +25,16 @@ export default {
   data () {
     return {
       loading: false,
-      events: []
+      //events: []
+    }
+  },
+  computed: {
+    events () {
+      return this.$store.state.eventsInFocus
     }
   },
   beforeMount () {
-    this.events = this.$store.state.eventsInFocus
+    //this.events = this.$store.state.eventsInFocus
   },
   components: {
     EventPreview
@@ -63,6 +70,7 @@ export default {
   background-color: white;
   border-right: solid 1px #c3c7ca;
   padding: 0;
+  transition: width 0.3s;
 }
 
 
@@ -86,5 +94,22 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+
+
+
+.list-complete-item {
+  transition: all 1s;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+.list-complete-leave-active {
+  position: absolute;
+  left: 0;
+  width: 41%;
 }
 </style>

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import NavigationBar from './components/NavigationBar'
+import NavigationBar from './components/includes/NavigationBar'
 import ModalSignIn from './components/modals/ModalSignIn'
 import ModalRegister from './components/modals/ModalRegister'
 
@@ -31,6 +31,7 @@ export default {
 <style>
 /* These styles are applied globally */
 @import '../node_modules/bulma/css/bulma.css';
+@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
 
 html {
   height: 100%;

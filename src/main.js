@@ -17,6 +17,14 @@ Vue.filter('addS', value => {
   return value + 's'
 })
 
+Vue.filter('capitalize', value => {
+  if (!value) {
+    return ''
+  }
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
 const store = new Vuex.Store({
   state: {
     loadingExploreView: true,
@@ -45,9 +53,23 @@ const store = new Vuex.Store({
     },
     refreshEventsInFocus (state, payload) {
       state.eventsInFocus = payload
+      state.eventsInFocus.forEach(el => {
+        if(!el.rating.sum) {
+          el.rating.sum = 0
+        }
+      })
+      state.eventsInFocus.sort((a,b) => {
+        return b.rating.sum - a.rating.sum
+      })
     },
-    clearEventsInFocus (state) {
-      state.eventsInFocus = []
+    clearEventsInFocus (state, payload) {
+      if(!payload) {
+        state.eventsInFocus = []
+      } else {
+        state.eventsInFocus = state.eventsInFocus.filter(el => {
+          return el.interest != payload
+        })
+      }
     },
     changeLoadingExploreView (state) {
       state.loadingExploreView = !state.loadingExploreView

@@ -100,8 +100,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://use.fontawesome.com/releases/v5.0.9/css/all.css');
-
 nav {
   background-color: #fff;
   height: 80px;
@@ -114,7 +112,7 @@ nav {
   margin: auto;
   margin-right: 5px;
   margin-top: 5px;
-  background: url('../assets/img/logo.png');
+  background: url('../../assets/img/logo.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -125,7 +123,7 @@ nav {
   margin: auto;
   margin-right: 0px;
   margin-top: 5px;
-  background: url('../assets/img/logo.png');
+  background: url('../../assets/img/logo.png');
   background-repeat: no-repeat;
   background-size: contain;
   display: none;

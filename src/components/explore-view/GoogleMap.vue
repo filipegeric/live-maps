@@ -1,22 +1,16 @@
 <template>
   <div class="column is-7">
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
-    <h1>Desnoooooooooo</h1>
+    <small-checkbox />
   </div>
 </template>
 
 <script>
+import SmallCheckbox from '../includes/SmallCheckbox'
+
 export default {
-  
+  components: {
+    SmallCheckbox
+  }
 }
 </script>
 
