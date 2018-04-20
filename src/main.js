@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuex from 'vuex'
+import moment from 'moment'
 
 Vue.use(VueAxios, axios)
 Vue.use(Vuex)
@@ -13,6 +14,8 @@ Vue.config.productionTip = false
 Vue.config.devtools = true
 axios.defaults.baseURL = 'http://192.168.0.14:8000'
 
+
+// Filters ===================================================
 Vue.filter('addS', value => {
   return value + 's'
 })
@@ -25,6 +28,14 @@ Vue.filter('capitalize', value => {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
+Vue.filter('dateFormat', (value, format) => {
+  return moment(value).format(format)
+})
+
+//===============================================================
+
+
+// Vuex Store ===================================================
 const store = new Vuex.Store({
   state: {
     loadingExploreView: true,
@@ -81,6 +92,8 @@ const store = new Vuex.Store({
     }
   }
 })
+
+//===============================================================
 
 /* eslint-disable no-new */
 new Vue({

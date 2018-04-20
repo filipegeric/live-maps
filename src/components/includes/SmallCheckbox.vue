@@ -1,6 +1,6 @@
 <template>
   <div class="columns" >
-    <div class="column is-4">
+    <div class="column is-4" >
       <ul>
         <li v-for="(interest, key) in interests" :key="key">
           <span>{{ interest.name | addS | capitalize }}</span>
