@@ -51,6 +51,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+#app::-webkit-scrollbar {
+  display: none;
+}
+
 .columns {
   margin: 0;
 }

@@ -53,11 +53,6 @@ const store = new Vuex.Store({
     },
     refreshEventsInFocus (state, payload) {
       state.eventsInFocus = payload
-      state.eventsInFocus.forEach(el => {
-        if(!el.rating.sum) {
-          el.rating.sum = 0
-        }
-      })
       state.eventsInFocus.sort((a,b) => {
         return b.rating.sum - a.rating.sum
       })
@@ -73,6 +68,16 @@ const store = new Vuex.Store({
     },
     changeLoadingExploreView (state) {
       state.loadingExploreView = !state.loadingExploreView
+    },
+    addToEventsInFocus (state, payload) {
+      axios.get(`/events/?interests=${payload}`).then(response => {
+        state.eventsInFocus = state.eventsInFocus.concat(response.data)
+        state.eventsInFocus.sort((a,b) => {
+          return b.rating.sum - a.rating.sum
+        })
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 })

@@ -70,7 +70,6 @@ export default {
   background-color: white;
   border-right: solid 1px #c3c7ca;
   padding: 0;
-  transition: width 0.3s;
 }
 
 
@@ -110,6 +109,6 @@ export default {
 .list-complete-leave-active {
   position: absolute;
   left: 0;
-  width: 41%;
+  width: 39%;
 }
 </style>

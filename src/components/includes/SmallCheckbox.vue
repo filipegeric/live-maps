@@ -20,7 +20,8 @@ import _ from 'lodash'
 export default {
   data () {
     return {
-      checkedInterests: []
+      checkedInterests: [],
+      firstChange: false
     }
   },
   computed: {
@@ -28,16 +29,19 @@ export default {
       return this.$store.state.interests
     }
   },
-  mounted () {
+  created () {
     this.checkedInterests = this.$store.state.checkedInterests
   },
   watch: {
     checkedInterests (newInterests, oldInterests) {
       if (newInterests.length > oldInterests.length) {
-
-      } else {
-        console.log()
+        if(!this.firstChange) {
+          this.firstChange = true
+        } else {
+          this.$store.commit('addToEventsInFocus', _.difference(newInterests, oldInterests)[0])
+        }
         
+      } else {
         this.$store.commit('clearEventsInFocus', this.$store.state.interests.find(el => {
           return el.id == _.pullAll(oldInterests, newInterests)[0]
         }).name)
@@ -79,7 +83,7 @@ li:last-child {
   min-width: 112px;
   cursor: pointer;
   font-weight: 500;
-  padding: 8px 0 16px 44px;
+  padding: 8px 0 16px 44px; 
 }
 .switch-label:before,
 .switch-label:after {
