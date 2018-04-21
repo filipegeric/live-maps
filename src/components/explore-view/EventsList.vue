@@ -1,20 +1,17 @@
 <template>
   <div id="events-column" class="column is-5">
-
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-      <img v-if="loading" id="loading-gif" src="../../assets/img/loading-gif.gif" alt="Loading...">
-    </transition>
-
-    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-      <div v-if="!loading" id="event-list-container">
+      <div v-if="true" id="event-list-container">
         <div id="event-list">
           <transition-group name="list-complete">
             <event-preview v-for="item in events" :key="item.id" class="list-complete-item" :event="item" /> 
           </transition-group>
+          <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <img v-if="loading" id="loading-gif" src="../../assets/img/loading-gif.gif" alt="Loading...">
+          </transition>
         </div>
       </div>
     </transition>
-
   </div>
 </template>
 
@@ -22,19 +19,13 @@
 import EventPreview from './EventPreview'
 
 export default {
-  data () {
-    return {
-      loading: false,
-      //events: []
-    }
-  },
   computed: {
     events () {
       return this.$store.state.eventsInFocus
+    },
+    loading () {
+      return this.$store.state.loadingEventsList
     }
-  },
-  beforeMount () {
-    //this.events = this.$store.state.eventsInFocus
   },
   components: {
     EventPreview
@@ -44,14 +35,11 @@ export default {
 
 <style scoped>
 #loading-gif {
-  margin-left: auto; 
-  margin-right: auto;
-  width: 190px; 
-  display: block; 
+  opacity: 0.7;
+  width: 190px;  
   position: absolute; 
-  z-index: -2; 
-  left: 0; 
-  right: 0;
+  left: 15%; 
+  top: 15em;
 }
 
 #event-list-container{

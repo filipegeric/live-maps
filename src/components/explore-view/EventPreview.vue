@@ -25,8 +25,8 @@
         </div>
       </div>
 
-      <div class="column is-1 has-text-centered" style="margin-top: auto; margin-bottom: auto;">
-        <a @click.prevent ><i class="fas fa-angle-right"></i></a>
+      <div class="column is-1 has-text-centered" style="margin-top: auto; margin-bottom: auto; padding: 0; padding-right: 5px;">
+        <a @click.prevent ><i class="fas fa-angle-right" style="padding-right: 5px;"></i></a>
       </div>
       
     </div>
@@ -34,15 +34,8 @@
 </template>
 
 <script>
-import moment from 'moment'
-
 export default {
-  props: ['event'],
-  data () {
-    return {
-      moment
-    }
-  }
+  props: ['event']
 }
 </script>
 
@@ -140,6 +133,7 @@ i {
 }
 .event-bar {
   background-color: #8c5b17;
+  color: #85aec5;
 }
 
 .event-festival:hover {

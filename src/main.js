@@ -39,6 +39,7 @@ Vue.filter('dateFormat', (value, format) => {
 const store = new Vuex.Store({
   state: {
     loadingExploreView: true,
+    loadingEventsList: false,
     interests: [],
     checkedInterests: [],
     eventsInFocus: [],
@@ -81,11 +82,13 @@ const store = new Vuex.Store({
       state.loadingExploreView = !state.loadingExploreView
     },
     addToEventsInFocus (state, payload) {
+      state.loadingEventsList = true
       axios.get(`/events/?interests=${payload}`).then(response => {
         state.eventsInFocus = state.eventsInFocus.concat(response.data)
         state.eventsInFocus.sort((a,b) => {
           return b.rating.sum - a.rating.sum
         })
+        state.loadingEventsList = false
       }).catch(err => {
         console.log(err)
       })
