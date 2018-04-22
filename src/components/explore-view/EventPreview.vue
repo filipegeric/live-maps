@@ -1,6 +1,6 @@
 <template>
   <article class="message is-small">
-    <div class="message-body columns">
+    <div class="message-body columns is-mobile">
 
       <div class="column is-1 has-text-centered" style="width: auto; margin-top: auto; margin-bottom: auto;">
         <div class="event-rate">

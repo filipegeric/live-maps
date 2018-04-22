@@ -1,14 +1,29 @@
 <template>
-  <div class="columns" >
-    <div class="column is-4" >
+  <div id="small-checkbox" >
+    <div>
       <ul>
-        <li v-for="(interest, key) in interests" :key="key">
-          <span>{{ interest.name | addS | capitalize }}</span>
-          <div class="is-pulled-right">
-            <input type="checkbox" :id="interest.name" name="interest" v-model="checkedInterests" :value="interest.id" class="switch-input">
-            <label :for="interest.name" class="switch-label" :class="`label-${interest.name}`"></label>
+        
+        <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
+          <div id="interests-list" v-if="!toggledInterests">
+            <li ref="interest" v-for="(interest, key) in interests" :key="key">
+              <span>{{ interest.name | addS | capitalize }}</span>
+              <div class="is-pulled-right">
+                <input type="checkbox" :id="interest.name" name="interest" v-model="checkedInterests" :value="interest.id" class="switch-input">
+                <label :for="interest.name" class="switch-label" :class="`label-${interest.name}`"></label>
+              </div>
+            </li>
           </div>
-        </li>
+        </transition>
+
+        <transition name="fade" mode="out-in">
+          <li @click.prevent="openSmallCheckbox" id="arrow-up" v-if="toggledInterests" class="has-text-centered">
+            <a @click.prevent="openSmallCheckbox"><i class="fas fa-angle-up"></i></a>
+          </li>
+          <li @click.prevent="toggleSmallCheckbox" id="arrow-down" v-if="!toggledInterests" class="has-text-centered">
+            <a @click.prevent="toggleSmallCheckbox"><i class="fas fa-angle-down"></i></a>
+          </li>
+        </transition>
+
       </ul>
     </div>
   </div>
@@ -21,7 +36,8 @@ export default {
   data () {
     return {
       checkedInterests: [],
-      firstChange: false
+      firstChange: false,
+      toggledInterests: false
     }
   },
   computed: {
@@ -29,8 +45,17 @@ export default {
       return this.$store.state.interests
     }
   },
-  created () {
+  mounted () {
     this.checkedInterests = this.$store.state.checkedInterests
+  },
+  methods: {
+    toggleSmallCheckbox () {
+      console.log(this.$refs.interest);
+      this.toggledInterests = true;
+    },
+    openSmallCheckbox () {
+      this.toggledInterests = false;
+    }
   },
   watch: {
     checkedInterests (newInterests, oldInterests) {
@@ -54,6 +79,37 @@ export default {
 
 
 <style scoped>
+#small-checkbox {
+  position: absolute;
+  width: 15%;
+  bottom: 2%;
+  margin-left: 10px;
+  min-width: 140px;
+  z-index: 5;
+}
+
+#interests-list {
+  transition: all 1s;
+}
+
+#arrow-up:hover, #arrow-down:hover {
+  cursor: pointer;
+}
+
+#arrow-up {
+  padding: 0; 
+  border-radius: 8px; 
+  border-top: solid 1px #bfbfbf;
+  border-bottom: solid 1px #bfbfbf;
+}
+
+#arrow-down {
+  padding: 0; 
+  /*border-top: solid 1px #bfbfbf; */
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
 li {
   padding: 10px;
   border: solid 1px #bfbfbf;
@@ -70,8 +126,8 @@ li:nth-child(1) {
 li:last-child {
   border: solid 1px #bfbfbf;
   border-top: none;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  /*border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;*/
 }
 
 .switch-input {
@@ -115,9 +171,7 @@ li:last-child {
     0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
 }
 
-.switch-input:checked + .switch-label:before {
-  /*background-color: attr(data-color);*/
-}
+
 .switch-input:checked + .switch-label:after {
   /*background-color: attr(data-color);*/
   -ms-transform: translate(80%, -50%);

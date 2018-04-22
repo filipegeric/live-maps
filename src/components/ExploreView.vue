@@ -18,6 +18,7 @@
 <script>
 import EventsList from './explore-view/EventsList'
 import GoogleMap from './explore-view/GoogleMap'
+import axios from 'axios'
 
 export default {
   components: {
@@ -31,6 +32,7 @@ export default {
 #main {
   padding-top: 80px;
   height: 100vh;
+  display: flex;
 }
 
 #loading-gif {
@@ -43,5 +45,12 @@ export default {
   left: 0;
   right: 0;
   padding-top: 120px;
+}
+
+@media (max-width: 768px) {
+  #main {
+    flex-direction: column-reverse;
+    height: auto;
+  }
 }
 </style>

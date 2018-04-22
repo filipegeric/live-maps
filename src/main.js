@@ -7,12 +7,21 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vuex from 'vuex'
 import moment from 'moment'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.use(VueAxios, axios)
 Vue.use(Vuex)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyAr5DB-rqVoFnLtrZvQXxOnKdVL7lv9DXY'
+  }
+})
 Vue.config.productionTip = false
 Vue.config.devtools = true
-axios.defaults.baseURL = 'http://192.168.0.14:8000'
+// wifi
+//axios.defaults.baseURL = 'http://192.168.0.14:8000'
+// lan
+axios.defaults.baseURL = 'http://192.168.0.12:8000'
 
 
 // Filters ===================================================

@@ -60,6 +60,12 @@ export default {
   padding: 0;
 }
 
+@media (max-width: 768px) {
+  #events-column {
+    display: none;
+  }
+}
+
 
 /*---------*/
 /* width */

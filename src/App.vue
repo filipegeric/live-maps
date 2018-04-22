@@ -24,6 +24,9 @@ export default {
     NavigationBar,
     ModalSignIn,
     ModalRegister
+  },
+  beforeCreate () {
+    this.$store.commit('refreshInterests')
   }
 }
 </script>
