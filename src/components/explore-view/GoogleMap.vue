@@ -37,5 +37,9 @@ export default {
   #main-right-column {
     height: 100vh; 
   }
+
+  #the-map {
+    height: 86%;
+  }
 }
 </style>

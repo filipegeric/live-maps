@@ -19,9 +19,9 @@ Vue.use(VueGoogleMaps, {
 Vue.config.productionTip = false
 Vue.config.devtools = true
 // wifi
-//axios.defaults.baseURL = 'http://192.168.0.14:8000'
+axios.defaults.baseURL = 'http://192.168.0.14:8000'
 // lan
-axios.defaults.baseURL = 'http://192.168.0.12:8000'
+//axios.defaults.baseURL = 'http://192.168.0.12:8000'
 
 
 // Filters ===================================================
