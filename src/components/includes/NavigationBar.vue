@@ -7,7 +7,7 @@
       </div>
       
       <div id="logo-mobile"></div>
-      <a @click.prevent="handleBurgerToggle" id="burger" role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+      <a ref="burger" @click.prevent="handleBurgerToggle" id="burger" role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -88,10 +88,10 @@ export default {
       this.$store.commit('clearCheckedInterests')
     },
     handleBurgerToggle () {
-      var id = document.getElementById('burger').dataset.target
+      var id = this.$refs.burger.dataset.target
       var target = document.getElementById(id)
 
-      document.getElementById('burger').classList.toggle('is-active')
+      this.$refs.burger.classList.toggle('is-active')
       target.classList.toggle('is-active')
       
     }

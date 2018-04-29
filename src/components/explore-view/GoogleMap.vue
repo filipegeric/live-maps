@@ -2,7 +2,15 @@
   <transition appear appear-active-class="animated fadeIn">
     <div id="main-right-column" class="column is-7">
       <small-checkbox />
-      <gmap-map id="the-map" :center="center" :zoom="zoom" style=""></gmap-map>
+      <gmap-map ref="theMap" id="the-map" :center="center" :zoom="zoom">
+        <gmap-marker
+          v-for="m in events"
+          :key="m.id"
+          :position="{lat: m.lat, lng: m.long}"
+          :clickable="true"
+          @click="focus"
+        ></gmap-marker>
+      </gmap-map>
     </div>
   </transition>
 </template>
@@ -17,7 +25,27 @@ export default {
   data() {
     return {
       center: { lat: 45.252467, lng: 19.827957 },
+      m: {
+        position: { lat: 45.252479, lng: 19.827949 }
+      },
       zoom: 13
+    }
+  },
+  computed: {
+    events () {
+      return this.$store.state.eventsInFocus
+    }
+  },
+  methods: {
+    focus () {
+      
+      this.$refs.theMap.panTo(this.m.position)
+      this.zoom = 13
+      this.zoom = 17
+        
+         
+      
+      
     }
   }
 }

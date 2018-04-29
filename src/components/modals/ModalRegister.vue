@@ -1,5 +1,5 @@
 <template>
-  <div @keyup.esc="toggle" id="modal-register" class="modal animated fadeIn ">
+  <div ref="modalRegister" @keyup.esc="toggle" id="modal-register" class="modal animated fadeIn ">
     <div @click.prevent="toggle" class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -44,7 +44,7 @@
 export default {
   methods: {
     toggle () {
-      document.getElementById('modal-register').classList.remove('is-active')
+      this.$refs.modalRegister.classList.remove('is-active')
     }
   }
 }

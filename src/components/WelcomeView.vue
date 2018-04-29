@@ -50,6 +50,8 @@ export default {
   },
   methods: {
     openSignInModal () {
+      //console.log(this.$refs);
+      
       document.getElementById('modal-sign-in').classList.add('is-active')
       document.querySelector('#modal-sign-in input').focus()
     },
