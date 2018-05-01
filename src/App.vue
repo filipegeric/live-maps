@@ -2,15 +2,15 @@
   <div id="app">
 
     <transition appear appear-active-class="animated fadeInDown" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-      <navigation-bar v-if="$route.path != '/'" />
+      <navigation-bar v-if="$route.path != '/'" :openSignInModal="openSignInModal" :openRegisterModal="openRegisterModal" />
     </transition>
 
     <transition appear appear-active-class="animated fadeIn" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
-      <router-view/>
+      <router-view :openSignInModal="openSignInModal" :openRegisterModal="openRegisterModal"/>
     </transition>
 
-    <modal-sign-in v-if="!$store.state.signedIn" />
-    <modal-register v-if="!$store.state.signedIn" />
+    <modal-sign-in ref="modalSignIn" :close="closeSignInModal"  v-if="!$store.state.signedIn" />
+    <modal-register ref="modalRegister" :close="closeRegisterModal" v-if="!$store.state.signedIn" />
   </div>
 </template>
 
@@ -27,6 +27,20 @@ export default {
   },
   beforeCreate () {
     this.$store.commit('refreshInterests')
+  },
+  methods: {
+    openSignInModal() {
+      this.$refs.modalSignIn.isActive = true
+    },
+    closeSignInModal() {
+      this.$refs.modalSignIn.isActive = false
+    },
+    openRegisterModal() {
+      this.$refs.modalRegister.isActive = true
+    },
+    closeRegisterModal() {
+      this.$refs.modalRegister.isActive = false
+    }
   }
 }
 </script>

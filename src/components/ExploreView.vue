@@ -21,6 +21,7 @@ import GoogleMap from './explore-view/GoogleMap'
 import axios from 'axios'
 
 export default {
+  props: ['openSignInModal', 'openRegisterModal'],
   components: {
     EventsList,
     GoogleMap

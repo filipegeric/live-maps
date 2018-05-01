@@ -7,14 +7,14 @@
       </div>
       
       <div id="logo-mobile"></div>
-      <a ref="burger" @click.prevent="handleBurgerToggle" id="burger" role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+      <a ref="burger" @click.prevent="handleBurgerToggle" id="burger" role="button" class="navbar-burger" :class="{'is-active': burgerIsActive}" data-target="navMenu" aria-label="menu" aria-expanded="false">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
 
-    <div id="navMenu" class="navbar-menu ">
+    <div id="navMenu" class="navbar-menu " :class="{'is-active': burgerIsActive}">
       <div class="navbar-start">
         <div id="create-new-button" v-if="$store.state.signedIn" class="navbar-item">
           <p class="control">
@@ -73,27 +73,20 @@
 
 <script>
 export default {
+  props: ['openSignInModal', 'openRegisterModal'],
+  data () {
+    return {
+      burgerIsActive: false
+    }
+  },
   methods: {
-    openSignInModal () {
-      document.getElementById('modal-sign-in').classList.add('is-active')
-      document.querySelector('#modal-sign-in input').focus()
-    },
-    openRegisterModal () {
-      document.getElementById('modal-register').classList.add('is-active')
-      document.querySelector('#modal-register input').focus()
-    },
     handleBack () {
       this.$store.commit('changeLoadingExploreView')
       this.$store.commit('clearEventsInFocus')
       this.$store.commit('clearCheckedInterests')
     },
     handleBurgerToggle () {
-      var id = this.$refs.burger.dataset.target
-      var target = document.getElementById(id)
-
-      this.$refs.burger.classList.toggle('is-active')
-      target.classList.toggle('is-active')
-      
+      this.burgerIsActive = !this.burgerIsActive;
     }
   }
 }

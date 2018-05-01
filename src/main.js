@@ -22,7 +22,7 @@ Vue.config.devtools = true
 //axios.defaults.baseURL = 'http://192.168.0.14:8000'
 // lan
 //axios.defaults.baseURL = 'http://192.168.0.12:8000'
-axios.defaults.baseURL = 'http://192.168.0.117:8000'
+axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
 
 // Filters ===================================================

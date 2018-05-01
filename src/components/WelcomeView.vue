@@ -37,6 +37,7 @@
 import InterestsCheckbox from './welcome-view/InterestsCheckbox'
 
 export default {
+  props: ['openSignInModal', 'openRegisterModal'],
   components: {
     InterestsCheckbox
   },
@@ -47,18 +48,6 @@ export default {
   },
   mounted() {
     this.$store.commit('refreshInterests')
-  },
-  methods: {
-    openSignInModal () {
-      //console.log(this.$refs);
-      
-      document.getElementById('modal-sign-in').classList.add('is-active')
-      document.querySelector('#modal-sign-in input').focus()
-    },
-    openRegisterModal () {
-      document.getElementById('modal-register').classList.add('is-active')
-      document.querySelector('#modal-register input').focus()
-    }
   }
 }
 </script>
