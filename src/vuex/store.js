@@ -20,7 +20,7 @@ const store = new Vuex.Store({
       axios.get('/interests/').then(response => {
         state.interests = response.data
       }).catch(err => {
-        console.log(err);
+        console.log(err)
       })
     },
     clearInterests(state) {
@@ -33,10 +33,15 @@ const store = new Vuex.Store({
       state.checkedInterests = []
     },
     refreshEventsInFocus (state, payload) {
-      state.eventsInFocus = payload
-      state.eventsInFocus.sort((a,b) => {
-        return b.rating.sum - a.rating.sum
-      })
+      axios.get(`/events/?interests=${payload}`).then(response => {
+        state.eventsInFocus = response.data
+        state.eventsInFocus.sort((a,b) => {
+          return b.rating.sum - a.rating.sum
+        })
+        this.commit('changeLoadingExploreView')
+      }).catch(err => {
+        console.log(err)
+      }) 
     },
     clearEventsInFocus (state, payload) {
       if(!payload) {
@@ -65,4 +70,4 @@ const store = new Vuex.Store({
   }
 })
 
-export default store;
+export default store

@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     toggleSmallCheckbox () {
-      console.log(this.$refs.interest);
       this.toggledInterests = true;
     },
     openSmallCheckbox () {

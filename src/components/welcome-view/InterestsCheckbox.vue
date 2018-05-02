@@ -42,14 +42,8 @@ export default {
       if(!interests) {
         interests = this.interests.map(interest => interest.id).join(',')
       }
-      console.log(`/events/?interests=${interests}`)
-      axios.get(`/events/?interests=${interests}`).then(response => {
-        this.$store.commit('refreshCheckedInterests', interests.split(','))
-        this.$store.commit('refreshEventsInFocus', response.data)
-        this.$store.commit('changeLoadingExploreView')
-      }).catch(err => {
-        console.log(err)
-      })
+      this.$store.commit('refreshCheckedInterests', interests.split(','))
+      this.$store.commit('refreshEventsInFocus', interests)
       this.$router.push({ path: '/explore' })
     }
   }

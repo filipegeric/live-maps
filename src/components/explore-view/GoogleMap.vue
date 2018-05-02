@@ -38,14 +38,10 @@ export default {
   },
   methods: {
     focus () {
-      
       this.$refs.theMap.panTo(this.m.position)
       this.zoom = 13
       this.zoom = 17
-        
-         
-      
-      
+      // TODO
     }
   }
 }
