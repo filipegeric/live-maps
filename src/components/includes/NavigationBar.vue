@@ -81,7 +81,6 @@ export default {
   },
   methods: {
     handleBack () {
-      this.$store.commit('changeLoadingExploreView')
       this.$store.commit('clearEventsInFocus')
       this.$store.commit('clearCheckedInterests')
     },

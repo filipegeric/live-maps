@@ -24,6 +24,13 @@ export default {
   components: {
     EventsList,
     GoogleMap
+  },
+  mounted () {
+    
+    if(this.$store.state.eventsInFocus.length == 0 && this.$store.state.interests.length == 0) {
+      this.$store.commit('changeLoadingExploreView', true)
+      // This should be fixed somehow
+    }
   }
 }
 </script>

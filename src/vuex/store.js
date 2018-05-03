@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    loadingExploreView: true,
+    loadingExploreView: false,
     loadingEventsList: false,
     interests: [],
     checkedInterests: [],
@@ -38,7 +38,7 @@ const store = new Vuex.Store({
         state.eventsInFocus.sort((a,b) => {
           return b.rating.sum - a.rating.sum
         })
-        this.commit('changeLoadingExploreView')
+        this.commit('changeLoadingExploreView', false)
       }).catch(err => {
         console.log(err)
       }) 
@@ -52,8 +52,8 @@ const store = new Vuex.Store({
         })
       }
     },
-    changeLoadingExploreView (state) {
-      state.loadingExploreView = !state.loadingExploreView
+    changeLoadingExploreView (state, payload) {
+      state.loadingExploreView = payload
     },
     addToEventsInFocus (state, payload) {
       state.loadingEventsList = true

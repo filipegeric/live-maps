@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     submitForm () {
+      this.$store.commit('changeLoadingExploreView', true)
       var interests = this.checkedInterests.join(',')
       if(!interests) {
         interests = this.interests.map(interest => interest.id).join(',')
