@@ -1,14 +1,17 @@
 <template>
-  <div id="events-column" class="column is-5">
+  <div id="events-column" :class="`column is-${cols}`">
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-      <div v-if="true" id="event-list-container">
-        <div id="event-list">
+      <div id="event-list-container">
+        <div id="event-list" v-if="true">
           <transition-group name="list-complete">
             <event-preview v-for="item in events" :key="item.id" class="list-complete-item" :event="item" /> 
           </transition-group>
           <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <img v-if="loading" id="loading-gif" src="../../assets/img/loading-gif.gif" alt="Loading...">
           </transition>
+        </div>
+        <div id="focused-event">
+          <!-- TODO -->
         </div>
       </div>
     </transition>
@@ -19,6 +22,7 @@
 import EventPreview from './EventPreview'
 
 export default {
+  props: ['cols'],
   computed: {
     events () {
       return this.$store.state.eventsInFocus
@@ -58,6 +62,7 @@ export default {
   background-color: white;
   border-right: solid 1px #c3c7ca;
   padding: 0;
+  transition: width 0.2s;
 }
 
 @media (max-width: 768px) {

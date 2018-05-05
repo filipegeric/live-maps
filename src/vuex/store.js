@@ -9,6 +9,7 @@ const store = new Vuex.Store({
   state: {
     loadingExploreView: false,
     loadingEventsList: false,
+    focusedEvent: null,
     interests: [],
     checkedInterests: [],
     eventsInFocus: [],
@@ -66,6 +67,12 @@ const store = new Vuex.Store({
       }).catch(err => {
         console.log(err)
       })
+    },
+    focusEvent(state, payload) {
+      state.focusedEvent = payload
+    },
+    unfocusEvent(state) {
+      state.focusedEvent = null
     }
   }
 })

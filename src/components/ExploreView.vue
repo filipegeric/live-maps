@@ -7,8 +7,8 @@
     </transition>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
       <div v-if="!$store.state.loadingExploreView" id="main" class="columns">
-        <events-list />
-        <google-map />
+        <events-list :cols="$store.state.focusedEvent ? 6 : 5" />
+        <google-map :cols="$store.state.focusedEvent ? 6 : 7" />
       </div>
     </transition>
   </div>

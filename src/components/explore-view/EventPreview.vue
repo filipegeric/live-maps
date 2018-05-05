@@ -26,7 +26,7 @@
       </div>
 
       <div class="column is-1 has-text-centered" style="margin-top: auto; margin-bottom: auto; padding: 0; padding-right: 5px;">
-        <a @click.prevent ><i class="fas fa-angle-right" style="padding-right: 5px;"></i></a>
+        <a @click.prevent="focusEvent(event)" ><i class="fas fa-angle-right" style="padding-right: 5px;"></i></a>
       </div>
       
     </div>
@@ -35,7 +35,17 @@
 
 <script>
 export default {
-  props: ['event']
+  props: ['event'],
+  methods: {
+    focusEvent(event) {
+      if(this.$store.state.focusedEvent) {
+        this.$store.commit('unfocusEvent')
+      } else {
+        this.$store.commit('focusEvent', event)
+      }
+      
+    }
+  }
 }
 </script>
 
