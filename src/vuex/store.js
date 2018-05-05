@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -10,6 +9,8 @@ const store = new Vuex.Store({
     loadingExploreView: false,
     loadingEventsList: false,
     focusedEvent: null,
+    mapZoom: 13,
+    mapCenter: { lat: 45.252467, lng: 19.827957 },
     interests: [],
     checkedInterests: [],
     eventsInFocus: [],
@@ -73,6 +74,10 @@ const store = new Vuex.Store({
     },
     unfocusEvent(state) {
       state.focusedEvent = null
+      state.mapZoom = 13
+    },
+    setMapZoom(state, payload) {
+      state.mapZoom = payload
     }
   }
 })

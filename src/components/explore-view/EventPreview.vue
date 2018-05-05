@@ -38,12 +38,7 @@ export default {
   props: ['event'],
   methods: {
     focusEvent(event) {
-      if(this.$store.state.focusedEvent) {
-        this.$store.commit('unfocusEvent')
-      } else {
-        this.$store.commit('focusEvent', event)
-      }
-      
+      this.$store.commit('focusEvent', event)
     }
   }
 }

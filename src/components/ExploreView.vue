@@ -7,8 +7,8 @@
     </transition>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
       <div v-if="!$store.state.loadingExploreView" id="main" class="columns">
-        <events-list :cols="$store.state.focusedEvent ? 6 : 5" />
-        <google-map :cols="$store.state.focusedEvent ? 6 : 7" />
+        <events-list ref="eventsList" :cols="$store.state.focusedEvent ? 6 : 5" />
+        <google-map ref="googleMap" :cols="$store.state.focusedEvent ? 6 : 7" />
       </div>
     </transition>
   </div>
@@ -26,7 +26,6 @@ export default {
     GoogleMap
   },
   mounted () {
-    
     if(this.$store.state.eventsInFocus.length == 0 && this.$store.state.interests.length == 0) {
       this.$store.commit('changeLoadingExploreView', true)
       // This should be fixed somehow

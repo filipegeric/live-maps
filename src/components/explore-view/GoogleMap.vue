@@ -9,7 +9,7 @@
           :position="{lat: m.lat, lng: m.long}"
           :animation="4"
           :clickable="true"
-          @click="focus(m)"
+          @click="focusOnMap(m)"
           :opacity="0.8"
           :icon="{url: `${axios.defaults.baseURL}/static/images/pins/${m.interest}.png`, scaledSize: {height: scaleRating(m.rating.sum), width: scaleRating(m.rating.sum)}}"
         ></gmap-marker>
@@ -26,34 +26,30 @@ export default {
   components: {
     SmallCheckbox
   },
-  data() {
-    return {
-      center: { lat: 45.252467, lng: 19.827957 },
-      zoom: 13
-    }
-  },
   mounted() {
     this.$refs.theMap.$on('zoom_changed', (e) => {
-      this.zoom = e
-      
+      this.$store.commit('setMapZoom', e)
     })
   },
   computed: {
     events () {
       return this.$store.state.eventsInFocus
+    },
+    zoom () {
+      return this.$store.state.mapZoom
+    },
+    center () {
+      return this.$store.state.mapCenter
+    },
+    focusedEvent () {
+      return this.$store.state.focusedEvent
     }
   },
   methods: {
-    focus (m) {
-      // this is pretty stupid, but ok
-      let interval = setInterval(() => {
-        if(this.zoom <= 15) {
-          this.zoom += 2
-        } else {
-          clearInterval(interval)
-        }
-      },140)
+    focusOnMap (m) {
+      this.$store.commit('setMapZoom', 17)
       this.$refs.theMap.panTo({lat: m.lat, lng: m.long})
+      this.$store.commit('focusEvent', m)
       // TODO
     },
     scaleRating(rating) {
@@ -68,6 +64,13 @@ export default {
         return 25
       } else {
         return 23
+      }
+    }
+  },
+  watch: {
+    focusedEvent (newValue) {
+      if(newValue) {
+        this.focusOnMap(newValue)
       }
     }
   }
