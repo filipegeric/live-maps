@@ -27,6 +27,9 @@ export default {
   },
   beforeCreate () {
     this.$store.commit('refreshInterests')
+    if(window.innerWidth < 769) {
+      this.$store.commit('setMapZoom', 12)
+    }
   },
   methods: {
     openSignInModal() {

@@ -15,7 +15,7 @@
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
           <div v-if="$store.state.focusedEvent" id="focused-event">
             <!-- TODO -->
-            <a @click.prevent="$store.commit('unfocusEvent')">unfocus</a>
+            <full-event :event="$store.state.focusedEvent" />
           </div>
         </transition>
       </div>
@@ -25,6 +25,7 @@
 
 <script>
 import EventPreview from './EventPreview'
+import FullEvent from './FullEvent'
 
 export default {
   props: ['cols'],
@@ -37,7 +38,8 @@ export default {
     }
   },
   components: {
-    EventPreview
+    EventPreview,
+    FullEvent
   }
 }
 </script>
@@ -61,6 +63,12 @@ export default {
   height: 99%;
   overflow: auto;
   padding-right: 15px;
+}
+
+#focused-event {
+  width: 100%;
+  height: 99%;
+  overflow: auto;
 }
 
 #events-column {

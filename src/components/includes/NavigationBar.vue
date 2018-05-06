@@ -83,6 +83,7 @@ export default {
     handleBack () {
       this.$store.commit('clearEventsInFocus')
       this.$store.commit('clearCheckedInterests')
+      this.$store.commit('unfocusEvent')
     },
     handleBurgerToggle () {
       this.burgerIsActive = !this.burgerIsActive;
