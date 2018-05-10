@@ -8,6 +8,7 @@ import axios from 'axios'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import './filters.js'
 import store from './vuex/store'
+import VueCookie from 'vue-cookie'
 
 Vue.use(VueAxios, axios)
 Vue.use(VueGoogleMaps, {
@@ -15,6 +16,7 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyAr5DB-rqVoFnLtrZvQXxOnKdVL7lv9DXY'
   }
 })
+Vue.use(VueCookie)
 Vue.config.productionTip = false
 Vue.config.devtools = true
 axios.defaults.baseURL = 'http://192.168.0.14:8000'

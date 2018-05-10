@@ -76,6 +76,7 @@ export default {
   border-right: solid 1px #c3c7ca;
   padding: 0;
   transition: width 0.2s;
+  background-image: url('../../assets/img/pattern.svg');
 }
 
 @media (max-width: 768px) {

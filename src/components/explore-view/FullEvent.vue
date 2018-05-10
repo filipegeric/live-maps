@@ -59,7 +59,7 @@ export default {
 }
 
 .card-image {
-  width: 75%;
+  width: 70%;
   padding-left: 1.5rem;
 }
 

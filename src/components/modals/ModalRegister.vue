@@ -11,7 +11,7 @@
           <div class="columns">
             <div class="field column is-half">
               <p class="control">
-                <input class="input" type="text" placeholder="First name" required>
+                <input ref="firstNameInput" class="input" type="text" placeholder="First name" required>
               </p>
             </div>
             <div class="field column is-half">
@@ -46,6 +46,15 @@ export default {
   data () {
     return {
       isActive: false
+    }
+  },
+  watch: {
+    isActive (newValue) {
+      if(newValue) {
+        this.$nextTick(() => {
+          this.$refs.firstNameInput.focus()
+        })
+      }
     }
   }
 }

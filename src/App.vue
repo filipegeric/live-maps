@@ -9,9 +9,14 @@
       <router-view :openSignInModal="openSignInModal" :openRegisterModal="openRegisterModal"/>
     </transition>
 
-    <modal-sign-in ref="modalSignIn" :close="closeSignInModal"  v-if="!$store.state.signedIn" />
-    <modal-register ref="modalRegister" :close="closeRegisterModal" v-if="!$store.state.signedIn" />
-  </div>
+    <transition leave-active-class="animated fadeOut">
+      <modal-sign-in ref="modalSignIn" :close="closeSignInModal"  v-if="!$store.state.signedIn" />
+    </transition>
+    <transition leave-active-class="animated fadeOut">
+      <modal-register ref="modalRegister" :close="closeRegisterModal" v-if="!$store.state.signedIn" />
+    </transition>
+
+  </div> 
 </template>
 
 <script>

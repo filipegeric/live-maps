@@ -16,54 +16,63 @@
 
     <div id="navMenu" class="navbar-menu " :class="{'is-active': burgerIsActive}">
       <div class="navbar-start">
-        <div id="create-new-button" v-if="$store.state.signedIn" class="navbar-item">
-          <p class="control">
-            <a class="button is-primary">
-              <span>Create new event</span>
-            </a>
-          </p>
-        </div>
-        <div v-else class="navbar-item " style="padding-right: 0px;">
+        <div class="navbar-item " style="padding-right: 0px;">
           <p class="control">
             <router-link to="/"><i id="i-widescreen" @click="handleBack" class="fas fa-angle-left"></i></router-link>
           </p>
         </div>
+        <transition enter-active-class="animated fadeIn">
+          <div id="create-new-button" v-if="$store.state.signedIn" class="navbar-item">
+            <p class="control">
+              <a class="button is-primary">
+                <span>Create new event</span>
+              </a>
+            </p>
+          </div>
+        </transition>
+        
       </div>
       <div id="logo"></div>
       <div class="navbar-end">
         
-        <div v-if="$store.state.signedIn" id="user-name" class="navbar-item">
-          <span>Filip Egeric |</span>
-        </div>
-        <div v-if="$store.state.signedIn" class="navbar-item" style="float: right;">
-          <div class="field is-grouped">
-            <p class="control">
-              <a class="button is-primary">
-                <span>Profile</span>
-              </a>
-            </p>
-            <p class="control">
-              <a class="button is-primary">
-                <span>Logout</span>
-              </a>
-            </p>
+        <transition enter-active-class="animated fadeIn" >
+          <div v-if="$store.state.signedIn" id="user-name" class="navbar-item">
+            <span>Filip Egeric |</span>
           </div>
-        </div>
+        </transition>
+        <transition enter-active-class="animated fadeIn" >
+          <div v-if="$store.state.signedIn" class="navbar-item" style="float: right;">
+            <div class="field is-grouped">
+              <p class="control">
+                <a class="button is-primary">
+                  <span>Profile</span>
+                </a>
+              </p>
+              <p class="control">
+                <a @click.prevent="handleLogout" class="button is-primary">
+                  <span>Logout</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </transition>
         
-        <div v-if="!$store.state.signedIn" class="navbar-item" style="padding-left: 50px; float: right;">
-          <div class="field is-grouped">
-            <p class="control">
-              <a @click.prevent="openRegisterModal" class="button is-primary">
-                <span>Register</span>
-              </a>
-            </p>
-            <p class="control">
-              <a @click.prevent="openSignInModal" class="button is-primary">
-                <span>Login</span>
-              </a>
-            </p>
+        <transition enter-active-class="animated fadeIn" >
+          <div v-if="!$store.state.signedIn" class="navbar-item" style="padding-left: 50px; float: right;">
+            <div class="field is-grouped">
+              <p class="control">
+                <a @click.prevent="openRegisterModal" class="button is-primary">
+                  <span>Register</span>
+                </a>
+              </p>
+              <p class="control">
+                <a @click.prevent="openSignInModal" class="button is-primary">
+                  <span>Login</span>
+                </a>
+              </p>
+            </div>
           </div>
-        </div>
+        </transition>
 
       </div>
     </div>
@@ -87,6 +96,9 @@ export default {
     },
     handleBurgerToggle () {
       this.burgerIsActive = !this.burgerIsActive;
+    },
+    handleLogout () {
+      this.$store.commit('logout')
     }
   }
 }

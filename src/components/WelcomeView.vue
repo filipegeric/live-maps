@@ -7,12 +7,14 @@
       </div>
     </div>
 
-    <div class="columns">
-      <div id="reg-login-col" class="column is-2 is-offset-5 has-text-centered">
-        <a @click.prevent="openRegisterModal">REGISTER</a>
-        <a @click.prevent="openSignInModal">LOGIN</a>
+    <transition leave-active-class="animated fadeOut">
+      <div v-if="!$store.state.signedIn" class="columns">
+        <div id="reg-login-col" class="column is-2 is-offset-5 has-text-centered">
+          <a @click.prevent="openRegisterModal">REGISTER</a>
+          <a @click.prevent="openSignInModal">LOGIN</a>
+        </div>
       </div>
-    </div>
+    </transition>
 
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
       <div v-if="loading" id="loading-gif">
@@ -23,7 +25,11 @@
     <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOut">
       <div v-if="!loading" style="margin-bottom: 2em;">
         <div class="columns has-text-centered" style="margin-bottom: 0;">
-          <h2 class="column is-4 is-offset-4">Select your interests</h2>
+          <h2 class="column is-4 is-offset-4">Select your interests
+            <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+              <span v-if="$store.state.signedIn">, {{ $store.state.user.first_name }}</span>
+            </transition>
+          </h2>
         </div>
         
         <interests-checkbox />

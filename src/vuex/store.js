@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     checkedInterests: [],
     eventsInFocus: [],
     user: {},
+    token: null,
     signedIn: false
   },
   mutations: {
@@ -78,7 +79,22 @@ const store = new Vuex.Store({
     },
     setMapZoom(state, payload) {
       state.mapZoom = payload
+    },
+    tryLogin(state, payload) {
+      axios.post('/auth/login', payload).then(response => {
+        state.token = response.data.token
+        state.user = response.data.user
+        state.signedIn = true
+      }).catch(err => {
+        console.log('greska: ' + err)
+      })
+    },
+    logout(state) {
+      state.token = null
+      state.user = null
+      state.signedIn = false
     }
+
   }
 })
 
