@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import VueCookie from 'vue-cookie'
 
 Vue.use(Vuex)
 
@@ -85,6 +86,7 @@ const store = new Vuex.Store({
         state.token = response.data.token
         state.user = response.data.user
         state.signedIn = true
+        VueCookie.set('token', response.data.token, 1)
       }).catch(err => {
         console.log('greska: ' + err)
       })
@@ -93,6 +95,17 @@ const store = new Vuex.Store({
       state.token = null
       state.user = null
       state.signedIn = false
+      VueCookie.delete('token')
+    },
+    getUser(state, payload) {
+      axios.post('/user/', {token: payload}).then(response => {
+        console.log(response);
+        state.user = response.data
+        state.token = payload
+        state.signedIn = true
+      }).catch(err => {
+        console.log(err)
+      })
     }
 
   }

@@ -37,14 +37,14 @@
         
         <transition enter-active-class="animated fadeIn" >
           <div v-if="$store.state.signedIn" id="user-name" class="navbar-item">
-            <span>Filip Egeric |</span>
+            <span>{{ $store.state.user.first_name + ' ' + $store.state.user.last_name }} |</span>
           </div>
         </transition>
         <transition enter-active-class="animated fadeIn" >
           <div v-if="$store.state.signedIn" class="navbar-item" style="float: right;">
             <div class="field is-grouped">
               <p class="control">
-                <a class="button is-primary">
+                <a @click.prevent="openProfileModal" class="button is-primary">
                   <span>Profile</span>
                 </a>
               </p>
@@ -82,7 +82,7 @@
 
 <script>
 export default {
-  props: ['openSignInModal', 'openRegisterModal'],
+  props: ['openSignInModal', 'openRegisterModal', 'openProfileModal'],
   data () {
     return {
       burgerIsActive: false
