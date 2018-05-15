@@ -6,28 +6,44 @@
         <p class="modal-card-title">Register</p>
         <button @click.prevent="close" class="delete" aria-label="close"></button>
       </header>
-      <form @submit.prevent>
+      <form @submit.prevent="handleSubmit">
         <section class="modal-card-body">
+          <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
+            <div v-if="errors" class="notification is-danger content">
+              <button @click.prevent="$store.commit('changeRegisterErrors', null)" class="delete"></button>
+              <ul>
+                <li v-for="(value, key) in errors" :key="key">
+                  {{ value[0] }}
+                </li>
+              </ul>
+            </div>
+          </transition>
+          
           <div class="columns">
             <div class="field column is-half">
               <p class="control">
-                <input ref="firstNameInput" class="input" type="text" placeholder="First name" required>
+                <input ref="firstNameInput" v-model="credentials.first_name" class="input" type="text" placeholder="First name" required>
               </p>
             </div>
             <div class="field column is-half">
               <p class="control">
-                <input class="input" type="text" placeholder="Last name" required>
+                <input class="input" v-model="credentials.last_name" type="text" placeholder="Last name" required>
               </p>
             </div>
           </div>
           <div class="field">
             <p class="control">
-              <input class="input" type="email" placeholder="Email" required>
+              <input class="input" v-model="credentials.username" type="text" placeholder="Username" required>
             </p>
           </div>
           <div class="field">
             <p class="control">
-              <input class="input" type="password" placeholder="Password" required>
+              <input class="input" v-model="credentials.email" type="email" placeholder="Email" required>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <input class="input" v-model="credentials.password" type="password" placeholder="Password" required>
             </p>
           </div>
         </section>
@@ -45,7 +61,24 @@ export default {
   props: ['close'],
   data () {
     return {
-      isActive: false
+      isActive: false,
+      credentials: {
+        username: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: ''
+      }
+    }
+  },
+  computed: {
+    errors () {
+      return this.$store.state.registerErrors
+    }
+  },
+  methods: {
+    handleSubmit () {
+      this.$store.commit('tryRegister', this.credentials)
     }
   },
   watch: {
@@ -63,6 +96,7 @@ export default {
 <style scoped>
 .columns {
   margin-bottom: 0;
+  padding-top: 0.5em;
 }
 
 .field.column.is-half {
@@ -84,6 +118,15 @@ export default {
 
 .modal-card {
   width: 520px;
+}
+
+.is-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  padding-top: 0.2em;
 }
 
 @media (max-width: 768px) {

@@ -8,6 +8,12 @@
       </header>
       <form @submit.prevent="handleSubmit">
         <section class="modal-card-body">
+          <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
+            <div v-if="error" class="notification is-danger">
+              <button @click.prevent="$store.commit('changeLoginError', false)" class="delete"></button>
+              Please check your credentials!
+            </div>
+          </transition>
           <div class="field">
             <p class="control">
               <input ref="usernameInput" v-model="credentials.username" class="input" type="text" placeholder="Username" required>
@@ -42,6 +48,11 @@ export default {
       }
     }
   },
+  computed: {
+    error() {
+      return this.$store.state.loginError
+    }
+  },
   methods: {
     handleSubmit () {
       this.$store.commit('tryLogin', this.credentials)
@@ -70,5 +81,11 @@ export default {
 
 .modal-card {
   width: 520px;
+}
+
+.is-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
 }
 </style>

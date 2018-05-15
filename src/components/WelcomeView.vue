@@ -14,6 +14,9 @@
           <a @click.prevent="openSignInModal">LOGIN</a>
         </div>
       </div>
+      <div v-else class="column is-2 is-offset-5 has-text-centered">
+        <a @click.prevent="$store.commit('logout')" >LOGOUT</a>
+      </div>
     </transition>
 
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">

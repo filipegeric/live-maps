@@ -17,7 +17,9 @@ const store = new Vuex.Store({
     eventsInFocus: [],
     user: {},
     token: null,
-    signedIn: false
+    signedIn: false,
+    loginError: false,
+    registerErrors: null
   },
   mutations: {
     refreshInterests(state) {
@@ -89,6 +91,7 @@ const store = new Vuex.Store({
         VueCookie.set('token', response.data.token, 1)
       }).catch(err => {
         console.log('greska: ' + err)
+        state.loginError = true
       })
     },
     logout(state) {
@@ -106,6 +109,28 @@ const store = new Vuex.Store({
       }).catch(err => {
         console.log(err)
       })
+    },
+    changeLoginError(state, payload) {
+      state.loginError = payload
+    },
+    tryRegister(state, payload) {
+      axios.post('/auth/register/', payload).then(response => {
+        state.token = response.data.token
+        
+        axios.post('/user/', {token: response.data.token}).then(res => {
+          state.user = res.data
+          state.signedIn = true
+        }).catch(err => {
+          console.log(err)
+        })
+        
+      }).catch(err => {
+        console.log(err.response.data.message)
+        state.registerErrors = err.response.data.message
+      })
+    },
+    changeRegisterErrors(state, payload) {
+      state.registerErrors = payload
     }
 
   }
