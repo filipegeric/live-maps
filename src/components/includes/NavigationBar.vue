@@ -24,7 +24,7 @@
         <transition enter-active-class="animated fadeIn">
           <div id="create-new-button" v-if="$store.state.signedIn" class="navbar-item">
             <p class="control">
-              <a class="button is-primary">
+              <a @click.prevent="openCreateEventModal" class="button is-primary">
                 <span>Create new event</span>
               </a>
             </p>
@@ -82,7 +82,7 @@
 
 <script>
 export default {
-  props: ['openSignInModal', 'openRegisterModal', 'openProfileModal'],
+  props: ['openSignInModal', 'openRegisterModal', 'openProfileModal', 'openCreateEventModal'],
   data () {
     return {
       burgerIsActive: false

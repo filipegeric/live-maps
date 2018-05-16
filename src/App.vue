@@ -2,7 +2,11 @@
   <div id="app">
 
     <transition appear appear-active-class="animated fadeInDown" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-      <navigation-bar v-if="$route.path != '/'" :openSignInModal="openSignInModal" :openRegisterModal="openRegisterModal" :openProfileModal="openProfileModal" />
+      <navigation-bar v-if="$route.path != '/'" 
+        :openSignInModal="openSignInModal" 
+        :openRegisterModal="openRegisterModal" 
+        :openProfileModal="openProfileModal"
+        :openCreateEventModal="openCreateEventModal" />
     </transition>
 
     <transition appear appear-active-class="animated fadeIn" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
@@ -18,6 +22,9 @@
     <transition leave-active-class="animated fadeOut">
       <modal-profile ref="modalProfile" :user="$store.state.user" :close="closeProfileModal" v-if="$store.state.signedIn" />
     </transition>
+    <transition leave-active-class="animated fadeOut">
+      <modal-create ref="modalCreate" :close="closeCreateEventModal" v-if="$store.state.signedIn" />
+    </transition>
     
   </div> 
 </template>
@@ -27,13 +34,15 @@ import NavigationBar from './components/includes/NavigationBar'
 import ModalSignIn from './components/modals/ModalSignIn'
 import ModalRegister from './components/modals/ModalRegister'
 import ModalProfile from './components/modals/ModalProfile'
+import ModalCreate from './components/modals/ModalCreate'
 
 export default {
   components: {
     NavigationBar,
     ModalSignIn,
     ModalRegister,
-    ModalProfile
+    ModalProfile,
+    ModalCreate
   },
   beforeCreate () {
     this.$store.commit('refreshInterests')
@@ -64,6 +73,12 @@ export default {
     },
     closeProfileModal() {
       this.$refs.modalProfile.isActive = false
+    },
+    openCreateEventModal() {
+      this.$refs.modalCreate.isActive = true
+    },
+    closeCreateEventModal() {
+      this.$refs.modalCreate.isActive = false
     }
   }
 }
