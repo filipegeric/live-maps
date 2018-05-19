@@ -46,7 +46,16 @@
 import InterestsCheckbox from './welcome-view/InterestsCheckbox'
 
 export default {
-  props: ['openSignInModal', 'openRegisterModal'],
+  props: {
+    openSignInModal: {
+      type: Function,
+      required: false
+    },
+    openRegisterModal: {
+      type: Function,
+      required: false
+    }
+  },
   components: {
     InterestsCheckbox
   },

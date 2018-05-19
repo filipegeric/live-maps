@@ -82,7 +82,24 @@
 
 <script>
 export default {
-  props: ['openSignInModal', 'openRegisterModal', 'openProfileModal', 'openCreateEventModal'],
+  props: {
+    openSignInModal: {
+      type: Function,
+      required: false
+    },
+    openRegisterModal: {
+      type: Function,
+      required: false
+    },
+    openProfileModal: {
+      type: Function,
+      required: false
+    },
+    openCreateEventModal: {
+      type: Function,
+      required: false
+    }
+  },
   data () {
     return {
       burgerIsActive: false

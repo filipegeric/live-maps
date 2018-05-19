@@ -28,7 +28,12 @@ import EventPreview from './EventPreview'
 import FullEvent from './FullEvent'
 
 export default {
-  props: ['cols'],
+  props: {
+    cols: {
+      type: Number,
+      required: true
+    }
+  },
   computed: {
     events () {
       return this.$store.state.eventsInFocus

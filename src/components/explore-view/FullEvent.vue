@@ -30,7 +30,12 @@
 
 <script>
 export default {
-  props: ['event']
+  props: {
+    event: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>
 

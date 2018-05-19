@@ -58,7 +58,12 @@
 
 <script>
 export default {
-  props: ['close'],
+  props: {
+    close: {
+      type: Function,
+      required: true
+    }
+  },
   data () {
     return {
       isActive: false,

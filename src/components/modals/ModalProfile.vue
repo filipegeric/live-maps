@@ -42,7 +42,16 @@
 
 <script>
 export default {
-  props: ['user', 'close'],
+  props: {
+    user: {
+      type: Object,
+      required: true
+    },
+    close: {
+      type: Function,
+      required: true
+    }
+  },
   data () {
     return {
       isActive: false

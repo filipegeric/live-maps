@@ -20,7 +20,16 @@ import EventsList from './explore-view/EventsList'
 import GoogleMap from './explore-view/GoogleMap'
 
 export default {
-  props: ['openSignInModal', 'openRegisterModal'],
+  props: {
+    openSignInModal: {
+      type: Function,
+      required: false
+    },
+    openRegisterModal: {
+      type: Function,
+      required: false
+    }
+  },
   components: {
     EventsList,
     GoogleMap

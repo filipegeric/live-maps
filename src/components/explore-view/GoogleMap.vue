@@ -22,7 +22,12 @@
 import SmallCheckbox from '../includes/SmallCheckbox'
 
 export default {
-  props: ['cols'],
+  props: {
+    cols: {
+      type: Number,
+      required: true
+    }
+  },
   components: {
     SmallCheckbox
   },

@@ -7,12 +7,6 @@
         <button @click.prevent="close" class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutUp">
-          <div v-if="error" class="notification is-danger">
-            <button @click.prevent class="delete"></button>
-            Please check your credentials!
-          </div>
-        </transition>
         <div class="field">
           <p class="control">
             <input ref="titleInput" v-model="event.title" class="input" type="text" placeholder="Title" required>
@@ -27,32 +21,32 @@
         <div class="field">
           <p class="control">
             End date:
-            <input v-model="event.end_at" class="input" type="date" required>
+            <input v-model="event.end_at" class="input" type="date" :disabled="event.permanent" required>
           </p>
         </div>
         <div class="field">
           <label class="checkbox">
-            <input type="checkbox">
+            <input type="checkbox" v-model="event.permanent">
             Permanent
           </label>
         </div>
         <div class="field">
-          <textarea class="textarea" placeholder="Description"></textarea>
+          <textarea v-model="event.body" class="textarea" placeholder="Description"></textarea>
         </div>
         <div class="field">
           <p class="control">
-            <input class="input" type="text" placeholder="Hashtags" title="Separate by spaces" required>
+            <input v-model="event.hashtag" class="input" type="text" placeholder="Hashtags" title="Separate by spaces" required>
           </p>
         </div>
         <div class="field">
           <p class="control">
-            <input class="input" type="text" placeholder="Address" required>
+            <input v-model="event.address" class="input" type="text" placeholder="Address" required>
           </p>
         </div>
         <div class="field">
           Interest:<br/>
           <div class="select">
-            <select>
+            <select v-model="event.interest">
               <option v-for="(value, key) in interests" :key="key" :value="value.id">{{ value.name | capitalize }}</option>
             </select>
           </div>
@@ -60,7 +54,7 @@
         <div class="field">
           <div class="file is-info has-name">
             <label class="file-label">
-              <input class="file-input" type="file" name="resume">
+              <input ref="imgInput" @change="handleFileInputChange" class="file-input" type="file">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
@@ -69,16 +63,18 @@
                   Image...
                 </span>
               </span>
-              <span class="file-name">
-                Screen Shot 2017-07-29 at 15.54.25.png
+              <span ref="fileLabel" class="file-name">
+
               </span>
             </label>
           </div>
         </div>
         <div class="field">
           Location to be implemented...
+          <div class="box">
+            This is where the map should go...
+          </div>
         </div>
-        
 
       </section>
       <footer class="modal-card-foot">
@@ -91,7 +87,12 @@
 
 <script>
 export default {
-  props: ['close'],
+  props: {
+    close: {
+      type: Function,
+      required: true
+    }
+  },
   data () {
     return {
       isActive: false,
@@ -102,7 +103,7 @@ export default {
         permanent: false,
         body: '',
         hashtag: '',
-        interest: '',
+        interest: 1,
         img: null,
         address: '',
         lat: '',
@@ -120,8 +121,19 @@ export default {
   },
   methods: {
     handleSubmit () {
-      console.log('submited');
-      
+      console.log('submited')
+    },
+    handleFileInputChange (e) {  
+      let reader = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      reader.onload = () => {
+        this.event.img = reader.result
+      }
+      reader.onerror = (err) => {
+        console.log(err)
+        this.event.img = ''
+      }
+      this.$refs.fileLabel.innerHTML = e.target.files[0].name
     }
   },
   watch: {
@@ -131,7 +143,7 @@ export default {
           this.$refs.titleInput.focus() 
         })
       }
-    }
+    },
   }
 }
 </script>
