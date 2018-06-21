@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     handleSubmit () {
-      this.$store.commit('tryRegister', this.credentials)
+      this.$store.dispatch('tryRegister', this.credentials)
     }
   },
   watch: {

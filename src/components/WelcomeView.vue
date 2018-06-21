@@ -65,7 +65,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('refreshInterests')
+    this.$store.dispatch('refreshInterests')
   }
 }
 </script>

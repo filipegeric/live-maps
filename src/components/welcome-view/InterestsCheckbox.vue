@@ -44,7 +44,7 @@ export default {
         interests = this.interests.map(interest => interest.id).join(',')
       }
       this.$store.commit('refreshCheckedInterests', interests.split(','))
-      this.$store.commit('refreshEventsInFocus', interests)
+      this.$store.dispatch('refreshEventsInFocus', interests)
       this.$router.push({ path: '/explore' })
     }
   }

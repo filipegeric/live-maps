@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     handleSubmit () {
-      this.$store.commit('tryLogin', this.credentials)
+      this.$store.dispatch('tryLogin', this.credentials)
     }
   },
   watch: {

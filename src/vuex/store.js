@@ -22,12 +22,8 @@ const store = new Vuex.Store({
     registerErrors: null
   },
   mutations: {
-    refreshInterests(state) {
-      axios.get('/interests/').then(response => {
-        state.interests = response.data
-      }).catch(err => {
-        console.log(err)
-      })
+    refreshInterests(state, payload) {
+      state.interests = payload
     },
     clearInterests(state) {
       state.interests = []
@@ -39,15 +35,10 @@ const store = new Vuex.Store({
       state.checkedInterests = []
     },
     refreshEventsInFocus (state, payload) {
-      axios.get(`/events/?interests=${payload}`).then(response => {
-        state.eventsInFocus = response.data
-        state.eventsInFocus.sort((a,b) => {
-          return b.rating.sum - a.rating.sum
-        })
-        this.commit('changeLoadingExploreView', false)
-      }).catch(err => {
-        console.log(err)
-      }) 
+      state.eventsInFocus = payload
+      state.eventsInFocus.sort((a,b) => {
+        return b.rating.sum - a.rating.sum
+      })
     },
     clearEventsInFocus (state, payload) {
       if(!payload) {
@@ -63,15 +54,11 @@ const store = new Vuex.Store({
     },
     addToEventsInFocus (state, payload) {
       state.loadingEventsList = true
-      axios.get(`/events/?interests=${payload}`).then(response => {
-        state.eventsInFocus = state.eventsInFocus.concat(response.data)
-        state.eventsInFocus.sort((a,b) => {
-          return b.rating.sum - a.rating.sum
-        })
-        state.loadingEventsList = false
-      }).catch(err => {
-        console.log(err)
+      state.eventsInFocus = state.eventsInFocus.concat(payload)
+      state.eventsInFocus.sort((a,b) => {
+        return b.rating.sum - a.rating.sum
       })
+      state.loadingEventsList = false
     },
     focusEvent(state, payload) {
       state.focusedEvent = payload
@@ -83,16 +70,11 @@ const store = new Vuex.Store({
     setMapZoom(state, payload) {
       state.mapZoom = payload
     },
-    tryLogin(state, payload) {
-      axios.post('/auth/login', payload).then(response => {
-        state.token = response.data.token
-        state.user = response.data.user
-        state.signedIn = true
-        VueCookie.set('token', response.data.token, 1)
-      }).catch(err => {
-        console.log('greska: ' + err)
-        state.loginError = true
-      })
+    login(state, payload) {
+      state.token = payload.token
+      state.user = payload.user
+      state.signedIn = true
+      VueCookie.set('token', payload.token, 1)
     },
     logout(state) {
       state.token = null
@@ -100,39 +82,68 @@ const store = new Vuex.Store({
       state.signedIn = false
       VueCookie.delete('token')
     },
-    getUser(state, payload) {
-      axios.post('/user/', {token: payload}).then(response => {
-        console.log(response);
-        state.user = response.data
-        state.token = payload
-        state.signedIn = true
-      }).catch(err => {
-        console.log(err)
-      })
+    setUser(state, payload) {
+      state.user = payload.user
+      state.token = payload.token
+      state.signedIn = true
     },
     changeLoginError(state, payload) {
       state.loginError = payload
     },
-    tryRegister(state, payload) {
-      axios.post('/auth/register/', payload).then(response => {
-        state.token = response.data.token
-        
-        axios.post('/user/', {token: response.data.token}).then(res => {
-          state.user = res.data
-          state.signedIn = true
-        }).catch(err => {
-          console.log(err)
-        })
-        
-      }).catch(err => {
-        console.log(err.response.data.message)
-        state.registerErrors = err.response.data.message
-      })
+    register(state, payload) {
+      state.token = payload
     },
     changeRegisterErrors(state, payload) {
       state.registerErrors = payload
     }
-
+  },
+  actions: {
+    refreshInterests({ commit }) {
+      axios.get('/interests/').then(response => {
+        commit('refreshInterests', response.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    refreshEventsInFocus({ commit }, payload) {
+      axios.get(`/events/?interests=${payload}`).then(response => {
+        commit('refreshEventsInFocus', response.data)
+        commit('changeLoadingExploreView', false)
+      }).catch(err => {
+        console.log(err)
+      }) 
+    },
+    addToEventsInFocus({ commit }, payload) {
+      axios.get(`/events/?interests=${payload}`).then(response => {
+        commit('addToEventsInFocus', response.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    tryLogin({ commit, state }, payload) {
+      axios.post('/auth/login', payload).then(response => {
+        commit('login', response.data)
+      }).catch(err => {
+        console.log('greska: ' + err)
+        state.loginError = true
+      })
+    },
+    getUser({ commit }, payload) {
+      axios.post('/user/', {token: payload}).then(response => {
+        commit('setUser', {user: response.data, token: payload})
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    tryRegister({ commit, state, dispatch }, payload) {
+      axios.post('/auth/register/', payload).then(response => {
+        commit('register', response.data.token)
+        dispatch('getUser', response.data.token)
+      }).catch(err => {
+        console.log(err.response.data.message)
+        state.registerErrors = err.response.data.message
+      })
+    }
   }
 })
 

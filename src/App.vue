@@ -45,14 +45,13 @@ export default {
     ModalCreate
   },
   beforeCreate () {
-    this.$store.commit('refreshInterests')
     if(window.innerWidth < 769) {
       this.$store.commit('setMapZoom', 12)
     }
   },
   mounted () {
     if(this.$cookie.get('token')) {
-      this.$store.commit('getUser', this.$cookie.get('token'))
+      this.$store.dispatch('getUser', this.$cookie.get('token'))
     }
   },
   methods: {

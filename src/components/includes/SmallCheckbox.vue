@@ -62,7 +62,7 @@ export default {
         if(!this.firstChange) {
           this.firstChange = true
         } else {
-          this.$store.commit('addToEventsInFocus', _.difference(newInterests, oldInterests)[0])
+          this.$store.dispatch('addToEventsInFocus', _.difference(newInterests, oldInterests)[0])
         }
         
       } else {
