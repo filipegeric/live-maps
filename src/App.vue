@@ -14,16 +14,16 @@
     </transition>
 
     <transition leave-active-class="animated fadeOut">
-      <modal-sign-in ref="modalSignIn" :close="closeSignInModal"  v-if="!$store.state.signedIn" />
+      <modal-sign-in ref="modalSignIn" :close="closeSignInModal"  v-if="!signedIn" />
     </transition>
     <transition leave-active-class="animated fadeOut">
-      <modal-register ref="modalRegister" :close="closeRegisterModal" v-if="!$store.state.signedIn" />
+      <modal-register ref="modalRegister" :close="closeRegisterModal" v-if="!signedIn" />
     </transition>
     <transition leave-active-class="animated fadeOut">
-      <modal-profile ref="modalProfile" :user="$store.state.user" :close="closeProfileModal" v-if="$store.state.signedIn" />
+      <modal-profile ref="modalProfile" :user="user" :close="closeProfileModal" v-if="signedIn" />
     </transition>
     <transition leave-active-class="animated fadeOut">
-      <modal-create ref="modalCreate" :close="closeCreateEventModal" v-if="$store.state.signedIn" />
+      <modal-create ref="modalCreate" :close="closeCreateEventModal" v-if="signedIn" />
     </transition>
     
   </div> 
@@ -35,6 +35,7 @@ import ModalSignIn from './components/modals/ModalSignIn'
 import ModalRegister from './components/modals/ModalRegister'
 import ModalProfile from './components/modals/ModalProfile'
 import ModalCreate from './components/modals/ModalCreate'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -43,6 +44,12 @@ export default {
     ModalRegister,
     ModalProfile,
     ModalCreate
+  },
+  computed: {
+    ...mapGetters([
+      'signedIn',
+      'user'
+    ])
   },
   beforeCreate () {
     if(window.innerWidth < 769) {

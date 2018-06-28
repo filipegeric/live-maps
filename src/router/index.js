@@ -18,6 +18,8 @@ export default new Router({
       path: '/explore',
       name: 'ExploreView',
       component: ExploreView
+      // this might not be good here
+      //component: () => import('@/components/ExploreView')
     },
     
     {

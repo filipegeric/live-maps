@@ -8,7 +8,7 @@
     </div>
 
     <transition leave-active-class="animated fadeOut">
-      <div v-if="!$store.state.signedIn" class="columns">
+      <div v-if="!signedIn" class="columns">
         <div id="reg-login-col" class="column is-2 is-offset-5 has-text-centered">
           <a @click.prevent="openRegisterModal">REGISTER</a>
           <a @click.prevent="openSignInModal">LOGIN</a>
@@ -30,7 +30,7 @@
         <div class="columns has-text-centered" style="margin-bottom: 0;">
           <h2 class="column is-4 is-offset-4">Select your interests
             <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-              <span v-if="$store.state.signedIn">, {{ $store.state.user.first_name }}</span>
+              <span v-if="signedIn">, {{ user.first_name }}</span>
             </transition>
           </h2>
         </div>
@@ -44,6 +44,7 @@
 
 <script>
 import InterestsCheckbox from './welcome-view/InterestsCheckbox'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -61,8 +62,13 @@ export default {
   },
   computed: {
     loading () {
-      return this.$store.state.interests.length == 0
-    }
+      return this.interests.length == 0
+    },
+    ...mapGetters([
+      'signedIn',
+      'user',
+      'interests'
+    ])
   },
   mounted() {
     this.$store.dispatch('refreshInterests')

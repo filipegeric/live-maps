@@ -22,7 +22,7 @@
           </p>
         </div>
         <transition enter-active-class="animated fadeIn">
-          <div id="create-new-button" v-if="$store.state.signedIn" class="navbar-item">
+          <div id="create-new-button" v-if="signedIn" class="navbar-item">
             <p class="control">
               <a @click.prevent="openCreateEventModal" class="button is-primary">
                 <span>Create new event</span>
@@ -36,12 +36,12 @@
       <div class="navbar-end">
         
         <transition enter-active-class="animated fadeIn" >
-          <div v-if="$store.state.signedIn" id="user-name" class="navbar-item">
-            <span>{{ $store.state.user.first_name + ' ' + $store.state.user.last_name }} |</span>
+          <div v-if="signedIn" id="user-name" class="navbar-item">
+            <span>{{ user.first_name + ' ' + user.last_name }} |</span>
           </div>
         </transition>
         <transition enter-active-class="animated fadeIn" >
-          <div v-if="$store.state.signedIn" class="navbar-item" style="float: right;">
+          <div v-if="signedIn" class="navbar-item" style="float: right;">
             <div class="field is-grouped">
               <p class="control">
                 <a @click.prevent="openProfileModal" class="button is-primary">
@@ -58,7 +58,7 @@
         </transition>
         
         <transition enter-active-class="animated fadeIn" >
-          <div v-if="!$store.state.signedIn" class="navbar-item" style="padding-left: 50px; float: right;">
+          <div v-if="!signedIn" class="navbar-item" style="padding-left: 50px; float: right;">
             <div class="field is-grouped">
               <p class="control">
                 <a @click.prevent="openRegisterModal" class="button is-primary">
@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     openSignInModal: {
@@ -104,6 +106,12 @@ export default {
     return {
       burgerIsActive: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'signedIn',
+      'user'
+    ])
   },
   methods: {
     handleBack () {

@@ -31,6 +31,7 @@
 
 <script>
 import _ from 'lodash'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -41,12 +42,13 @@ export default {
     }
   },
   computed: {
-    interests() {
-      return this.$store.state.interests
-    }
+    ...mapGetters({
+      storeCheckedInterests: 'checkedInterests',
+      interests: 'interests'
+    })
   },
   mounted () {
-    this.checkedInterests = this.$store.state.checkedInterests
+    this.checkedInterests = this.storeCheckedInterests
   },
   methods: {
     toggleSmallCheckbox () {
@@ -66,7 +68,7 @@ export default {
         }
         
       } else {
-        this.$store.commit('clearEventsInFocus', this.$store.state.interests.find(el => {
+        this.$store.commit('clearEventsInFocus', this.interests.find(el => {
           return el.id == _.pullAll(oldInterests, newInterests)[0]
         }).name)
       }

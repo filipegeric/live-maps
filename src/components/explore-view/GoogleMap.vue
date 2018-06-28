@@ -2,9 +2,9 @@
   <transition appear appear-active-class="animated fadeIn">
     <div id="main-right-column" :class="`column is-${cols}`">
       <small-checkbox />
-      <gmap-map ref="theMap" id="the-map" :center="center" :zoom="zoom">
+      <gmap-map ref="theMap" id="the-map" :center="mapCenter" :zoom="mapZoom">
         <gmap-marker
-          v-for="m in events"
+          v-for="m in eventsInFocus"
           :key="m.id"
           :position="{lat: m.lat, lng: m.long}"
           :animation="4"
@@ -20,6 +20,7 @@
 
 <script>
 import SmallCheckbox from '../includes/SmallCheckbox'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -37,18 +38,12 @@ export default {
     })
   },
   computed: {
-    events () {
-      return this.$store.state.eventsInFocus
-    },
-    zoom () {
-      return this.$store.state.mapZoom
-    },
-    center () {
-      return this.$store.state.mapCenter
-    },
-    focusedEvent () {
-      return this.$store.state.focusedEvent
-    }
+    ...mapGetters([
+      'eventsInFocus',
+      'mapZoom',
+      'mapCenter',
+      'focusedEvent'
+    ])
   },
   methods: {
     focusOnMap (m) {

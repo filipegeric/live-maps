@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     interests() {
-      return this.$store.state.interests
+      return this.$store.getters.interests
     }
   },
   methods: {

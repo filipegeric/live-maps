@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     error() {
-      return this.$store.state.loginError
+      return this.$store.getters.loginError
     }
   },
   methods: {

@@ -1,14 +1,14 @@
 <template>
   <div>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-      <div v-if="$store.state.loadingExploreView" id="loading-gif">
+      <div v-if="loadingExploreView" id="loading-gif">
         <img src="../assets/img/loading-gif.gif" alt="Loading...">
       </div>
     </transition>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-      <div v-if="!$store.state.loadingExploreView" id="main" class="columns">
-        <events-list ref="eventsList" :cols="$store.state.focusedEvent ? 6 : 5" />
-        <google-map ref="googleMap" :cols="$store.state.focusedEvent ? 6 : 7" />
+      <div v-if="!loadingExploreView" id="main" class="columns">
+        <events-list ref="eventsList" :cols="focusedEvent ? 6 : 5" />
+        <google-map ref="googleMap" :cols="focusedEvent ? 6 : 7" />
       </div>
     </transition>
   </div>
@@ -18,6 +18,7 @@
 <script>
 import EventsList from './explore-view/EventsList'
 import GoogleMap from './explore-view/GoogleMap'
+import { mapGetters } from 'vuex' 
 
 export default {
   props: {
@@ -34,8 +35,16 @@ export default {
     EventsList,
     GoogleMap
   },
+  computed: {
+    ...mapGetters([
+      'eventsInFocus',
+      'interests',
+      'loadingExploreView',
+      'focusedEvent'
+    ])
+  },
   mounted () {
-    if(this.$store.state.eventsInFocus.length == 0 && this.$store.state.interests.length == 0) {
+    if(this.eventsInFocus.length == 0 && this.interests.length == 0) {
       this.$store.commit('changeLoadingExploreView', true)
       // This should be fixed somehow
     }

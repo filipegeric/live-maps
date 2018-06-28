@@ -21,6 +21,47 @@ const store = new Vuex.Store({
     loginError: false,
     registerErrors: null
   },
+  getters: {
+    loadingExploreView(state) {
+      return state.loadingExploreView
+    },
+    loadingEventsList(state) {
+      return state.loadingEventsList
+    },
+    focusedEvent(state) {
+      return state.focusedEvent
+    },
+    mapZoom(state) {
+      return state.mapZoom
+    },
+    mapCenter(state) {
+      return state.mapCenter
+    },
+    interests(state) {
+      return state.interests
+    },
+    checkedInterests(state) {
+      return state.checkedInterests
+    },
+    eventsInFocus(state) {
+      return state.eventsInFocus
+    },
+    user(state) {
+      return state.user
+    },
+    token(state) {
+      return state.token
+    },
+    signedIn(state) {
+      return state.signedIn
+    },
+    loginError(state) {
+      return state.loginError
+    },
+    registerErrors(state) {
+      return state.registerErrors
+    }
+  },
   mutations: {
     refreshInterests(state, payload) {
       state.interests = payload

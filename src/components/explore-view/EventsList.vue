@@ -3,7 +3,7 @@
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
       <div id="event-list-container">
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-          <div id="event-list" v-if="!$store.state.focusedEvent">
+          <div id="event-list" v-if="!focusedEvent">
             <transition-group name="list-complete">
               <event-preview v-for="item in events" :key="item.id" class="list-complete-item" :event="item" /> 
             </transition-group>
@@ -13,9 +13,9 @@
           </div>
         </transition>
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-          <div v-if="$store.state.focusedEvent" id="focused-event">
+          <div v-if="focusedEvent" id="focused-event">
             <!-- TODO -->
-            <full-event :event="$store.state.focusedEvent" />
+            <full-event :event="focusedEvent" />
           </div>
         </transition>
       </div>
@@ -26,6 +26,7 @@
 <script>
 import EventPreview from './EventPreview'
 import FullEvent from './FullEvent'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -36,11 +37,14 @@ export default {
   },
   computed: {
     events () {
-      return this.$store.state.eventsInFocus
+      return this.$store.getters.eventsInFocus
     },
     loading () {
-      return this.$store.state.loadingEventsList
-    }
+      return this.$store.getters.loadingEventsList
+    },
+    ...mapGetters([
+      'focusedEvent'
+    ])
   },
   components: {
     EventPreview,

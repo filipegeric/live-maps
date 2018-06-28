@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     close: {
@@ -77,9 +79,9 @@ export default {
     }
   },
   computed: {
-    errors () {
-      return this.$store.state.registerErrors
-    }
+    ...mapGetters({
+      errors: 'registerErrors'
+    })
   },
   methods: {
     handleSubmit () {
