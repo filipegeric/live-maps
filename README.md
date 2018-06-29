@@ -1,8 +1,8 @@
 # live-maps
 
-> Hackaton project revisited
-
 > Small app that shows events and sites in Novi Sad, based on user interests
+
+> Developed with Vue.js
 
 ![alt 1](/screenshots/img1.PNG)
 
