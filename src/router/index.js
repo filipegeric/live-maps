@@ -17,9 +17,19 @@ export default new Router({
     {
       path: '/explore',
       name: 'ExploreView',
-      component: ExploreView
+      component: ExploreView,
       // this might not be good here
       //component: () => import('@/components/ExploreView')
+      meta: {
+        progress: {
+          func: [
+            {call: 'color', modifier: 'temp', argument: '#2da8ee'},
+            {call: 'fail', modifier: 'temp', argument: '#6e0000'},
+            {call: 'location', modifier: 'temp', argument: 'top'},
+            {call: 'transition', modifier: 'temp', argument: {speed: '1.5s', opacity: '0.6s', termination: 1500}}
+          ]
+        }
+      }
     },
     
     {

@@ -10,7 +10,23 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import './filters.js'
 import store from './vuex/store'
 import VueCookie from 'vue-cookie'
+import VueProgressBar from 'vue-progressbar'
 
+const options = {
+  color: '#2da8ee',
+  failedColor: '#874b4b',
+  thickness: '3px',
+  transition: {
+    speed: '1.2s',
+    opacity: '1.5s',
+    termination: 1500
+  },
+  autoRevert: true,
+  location: 'left',
+  inverse: false
+}
+
+Vue.use(VueProgressBar, options)
 Vue.use(VueAxios, axios)
 Vue.use(VueGoogleMaps, {
   load: {
@@ -21,7 +37,7 @@ Vue.use(VueCookie)
 Vue.config.productionTip = false
 Vue.config.devtools = true
 //axios.defaults.baseURL = 'http://192.168.0.14:8000'
-axios.defaults.baseURL = 'http://192.168.1.57:8000'
+axios.defaults.baseURL = 'http://192.168.43.196:8000'
 
 /* eslint-disable no-new */
 new Vue({

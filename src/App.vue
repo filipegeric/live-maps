@@ -1,6 +1,8 @@
 <template>
   <div id="app">
 
+    <vue-progress-bar></vue-progress-bar>
+
     <transition appear appear-active-class="animated fadeInDown" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
       <navigation-bar v-if="$route.path != '/'" 
         :openSignInModal="openSignInModal" 
@@ -56,10 +58,27 @@ export default {
       this.$store.commit('setMapZoom', 12)
     }
   },
+  created () {
+    this.$Progress.start()
+
+    this.$router.beforeEach((to, from, next) => {
+      if (to.meta.progress !== undefined) {
+        let meta = to.meta.progress
+        this.$Progress.parseMeta(meta)
+      }
+      this.$Progress.start()
+      next()
+    })
+
+    this.$router.afterEach((to, from) => {
+      this.$Progress.finish()
+    })
+  },
   mounted () {
     if(this.$cookie.get('token')) {
       this.$store.dispatch('getUser', this.$cookie.get('token'))
     }
+    this.$Progress.finish()
   },
   methods: {
     openSignInModal() {
