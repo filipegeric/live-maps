@@ -36,8 +36,7 @@ Vue.use(VueGoogleMaps, {
 Vue.use(VueCookie)
 Vue.config.productionTip = false
 Vue.config.devtools = true
-//axios.defaults.baseURL = 'http://192.168.0.14:8000'
-axios.defaults.baseURL = 'http://192.168.43.196:8000'
+axios.defaults.baseURL = 'http://localhost:8000'
 
 /* eslint-disable no-new */
 new Vue({

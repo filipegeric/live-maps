@@ -5,27 +5,27 @@
 
     <transition appear appear-active-class="animated fadeInDown" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
       <navigation-bar v-if="$route.path != '/'" 
-        :openSignInModal="openSignInModal" 
-        :openRegisterModal="openRegisterModal" 
-        :openProfileModal="openProfileModal"
-        :openCreateEventModal="openCreateEventModal" />
+        :openSignInModal="() => openModal('modalSignIn')" 
+        :openRegisterModal="() => openModal('modalRegister')" 
+        :openProfileModal="() => openModal('modalProfile')"
+        :openCreateEventModal="() => openModal('modalCreate')" />
     </transition>
 
     <transition appear appear-active-class="animated fadeIn" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
-      <router-view :openSignInModal="openSignInModal" :openRegisterModal="openRegisterModal"/>
+      <router-view :openSignInModal="() => openModal('modalSignIn')" :openRegisterModal="() => openModal('modalRegister')"/>
     </transition>
 
     <transition leave-active-class="animated fadeOut">
-      <modal-sign-in ref="modalSignIn" :close="closeSignInModal"  v-if="!signedIn" />
+      <modal-sign-in ref="modalSignIn" :close="() => closeModal('modalSignIn')"  v-if="!signedIn" />
     </transition>
     <transition leave-active-class="animated fadeOut">
-      <modal-register ref="modalRegister" :close="closeRegisterModal" v-if="!signedIn" />
+      <modal-register ref="modalRegister" :close="() => closeModal('modalRegister')" v-if="!signedIn" />
     </transition>
     <transition leave-active-class="animated fadeOut">
-      <modal-profile ref="modalProfile" :user="user" :close="closeProfileModal" v-if="signedIn" />
+      <modal-profile ref="modalProfile" :user="user" :close="() => closeModal('modalProfile')" v-if="signedIn" />
     </transition>
     <transition leave-active-class="animated fadeOut">
-      <modal-create ref="modalCreate" :close="closeCreateEventModal" v-if="signedIn" />
+      <modal-create ref="modalCreate" :close="() => closeModal('modalCreate')" v-if="signedIn" />
     </transition>
     
   </div> 
@@ -81,29 +81,11 @@ export default {
     this.$Progress.finish()
   },
   methods: {
-    openSignInModal() {
-      this.$refs.modalSignIn.isActive = true
+    openModal(name) {
+      this.$refs[name].isActive = true
     },
-    closeSignInModal() {
-      this.$refs.modalSignIn.isActive = false
-    },
-    openRegisterModal() {
-      this.$refs.modalRegister.isActive = true
-    },
-    closeRegisterModal() {
-      this.$refs.modalRegister.isActive = false
-    },
-    openProfileModal() {
-      this.$refs.modalProfile.isActive = true
-    },
-    closeProfileModal() {
-      this.$refs.modalProfile.isActive = false
-    },
-    openCreateEventModal() {
-      this.$refs.modalCreate.isActive = true
-    },
-    closeCreateEventModal() {
-      this.$refs.modalCreate.isActive = false
+    closeModal(name) {
+      this.$refs[name].isActive = false
     }
   }
 }
