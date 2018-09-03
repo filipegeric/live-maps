@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
+import { User, MyEvent } from '@/types.js';
 
 Vue.use(Vuex)
 
@@ -44,10 +45,13 @@ const store = new Vuex.Store({
       return state.checkedInterests
     },
     eventsInFocus(state) {
-      return state.eventsInFocus
+      return state.eventsInFocus.map(el => new MyEvent(el.address, el.body, el.created_at, el.created_at_ts,
+        el.deleted, el.end_at, el.end_at_ts, el.hashtag, el.id, el.image, el.interest, el.lat, el.long,
+        el.permanent, el.rating, el.start_at, el.start_at_ts, el.title));
     },
     user(state) {
-      return state.user
+      if(state.user === null) return state.user;
+      return new User(state.user.email, state.user.first_name, state.user.id, state.user.last_name, state.user.username);
     },
     token(state) {
       return state.token
@@ -69,20 +73,20 @@ const store = new Vuex.Store({
     clearInterests(state) {
       state.interests = []
     },
-    refreshCheckedInterests (state, payload) {
+    refreshCheckedInterests(state, payload) {
       state.checkedInterests = payload
     },
-    clearCheckedInterests (state) {
+    clearCheckedInterests(state) {
       state.checkedInterests = []
     },
-    refreshEventsInFocus (state, payload) {
+    refreshEventsInFocus(state, payload) {
       state.eventsInFocus = payload
-      state.eventsInFocus.sort((a,b) => {
+      state.eventsInFocus.sort((a, b) => {
         return b.rating.sum - a.rating.sum
       })
     },
-    clearEventsInFocus (state, payload) {
-      if(!payload) {
+    clearEventsInFocus(state, payload) {
+      if (!payload) {
         state.eventsInFocus = []
       } else {
         state.eventsInFocus = state.eventsInFocus.filter(el => {
@@ -90,13 +94,13 @@ const store = new Vuex.Store({
         })
       }
     },
-    changeLoadingExploreView (state, payload) {
+    changeLoadingExploreView(state, payload) {
       state.loadingExploreView = payload
     },
-    addToEventsInFocus (state, payload) {
+    addToEventsInFocus(state, payload) {
       state.loadingEventsList = true
       state.eventsInFocus = state.eventsInFocus.concat(payload)
-      state.eventsInFocus.sort((a,b) => {
+      state.eventsInFocus.sort((a, b) => {
         return b.rating.sum - a.rating.sum
       })
       state.loadingEventsList = false
@@ -152,7 +156,7 @@ const store = new Vuex.Store({
         commit('changeLoadingExploreView', false)
       }).catch(err => {
         console.log(err)
-      }) 
+      })
     },
     addToEventsInFocus({ commit }, payload) {
       axios.get(`/events/?interests=${payload}`).then(response => {
@@ -170,8 +174,8 @@ const store = new Vuex.Store({
       })
     },
     getUser({ commit }, payload) {
-      axios.post('/user/', {token: payload}).then(response => {
-        commit('setUser', {user: response.data, token: payload})
+      axios.post('/user/', { token: payload }).then(response => {
+        commit('setUser', { user: response.data, token: payload })
       }).catch(err => {
         console.log(err)
       })

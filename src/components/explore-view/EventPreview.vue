@@ -34,10 +34,12 @@
 </template>
 
 <script>
+import { MyEvent } from '@/types.js';
+
 export default {
   props: {
     event: {
-      type: Object,
+      type: MyEvent,
       required: true
     }
   },

@@ -41,10 +41,12 @@
 </template>
 
 <script>
+import { User } from '@/types.js';
+
 export default {
   props: {
     user: {
-      type: Object,
+      type: User,
       required: true
     },
     close: {
