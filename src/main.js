@@ -9,7 +9,6 @@ import axios from 'axios'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import './filters.js'
 import store from './vuex/store'
-import VueCookie from 'vue-cookie'
 import VueProgressBar from 'vue-progressbar'
 
 const options = {
@@ -33,7 +32,6 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyAr5DB-rqVoFnLtrZvQXxOnKdVL7lv9DXY'
   }
 })
-Vue.use(VueCookie)
 Vue.config.productionTip = false
 Vue.config.devtools = true
 axios.defaults.baseURL = 'http://localhost:8000'

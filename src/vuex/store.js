@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import VueCookie from 'vue-cookie'
 import { User, MyEvent } from '@/types.js';
 
 Vue.use(Vuex)
@@ -119,13 +118,13 @@ const store = new Vuex.Store({
       state.token = payload.token
       state.user = payload.user
       state.signedIn = true
-      VueCookie.set('token', payload.token, 1)
+      document.cookie = `token=${payload.token}`
     },
     logout(state) {
       state.token = null
       state.user = null
       state.signedIn = false
-      VueCookie.delete('token')
+      document.cookie = `token=;expires=Thu, 01 Jan 1970 00:00:01 GMT`
     },
     setUser(state, payload) {
       state.user = payload.user

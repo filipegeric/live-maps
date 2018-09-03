@@ -51,7 +51,10 @@ export default {
     ...mapGetters([
       'signedIn',
       'user'
-    ])
+    ]),
+    cookies() {
+      return document.cookie.split(';').map(el => ({[el.split('=')[0]]: el.split('=')[1]}))
+    }
   },
   beforeCreate () {
     if(window.innerWidth < 769) {
@@ -75,8 +78,8 @@ export default {
     })
   },
   mounted () {
-    if(this.$cookie.get('token')) {
-      this.$store.dispatch('getUser', this.$cookie.get('token'))
+    if(this.cookies.find(el => el.token)) {
+      this.$store.dispatch('getUser', this.cookies.find(el => el.token).token)
     }
     this.$Progress.finish()
   },
